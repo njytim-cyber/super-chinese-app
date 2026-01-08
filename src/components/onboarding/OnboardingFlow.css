@@ -12,6 +12,153 @@
     padding-bottom: max(var(--space-4), var(--safe-bottom));
 }
 
+/* HUD - Top bar aligned with body content */
+.onboarding-hud {
+    position: absolute;
+    top: max(var(--space-4), var(--safe-top));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px;
+    padding: 0 var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Center items vertically */
+    z-index: 10;
+    box-sizing: border-box;
+    height: 48px;
+    /* Fixed height for consistency */
+}
+
+.hud-left,
+.hud-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 100%;
+}
+
+.hud-left {
+    justify-content: flex-start;
+}
+
+.hud-right {
+    justify-content: flex-end;
+}
+
+/* Common Pill Styles for Consistency */
+.hud-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(30, 41, 59, 0.8);
+    /* var(--bg-card-hover) equivalent */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 9999px;
+    height: 36px;
+    /* Consistent height */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.pill-icon {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pill-value {
+    color: var(--text-primary);
+}
+
+.pill-highlight {
+    color: var(--text-highlight);
+    /* For XP/Streak numbers */
+}
+
+/* Specific Pill Overrides */
+.profile-pill {
+    padding-left: 6px;
+    /* Less padding for avatar */
+}
+
+.profile-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+}
+
+/* Empty spacer to push XP to right when streak not visible */
+.hud-spacer {
+    flex: 1;
+}
+
+.hud-item {
+    flex-shrink: 0;
+}
+
+@keyframes hudReveal {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.celebration-text {
+    font-size: 3rem;
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 4px 20px rgba(255, 170, 0, 0.5));
+    animation: celebrationPulse 0.5s ease-out;
+}
+
+@keyframes celebrationPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .onboarding-screen {
     display: flex;
     flex-direction: column;
