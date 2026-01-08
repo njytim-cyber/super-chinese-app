@@ -2,7 +2,6 @@ import { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui';
-import { XPDisplay, StreakCounter } from '../game';
 import { CharacterWriter } from '../learning';
 import { useGameStore } from '../../stores';
 import { ONBOARDING_CHARACTERS } from '../../types';
@@ -87,7 +86,10 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     // Progressive HUD reveal
     const [showXP, setShowXP] = useState(false);
     const [showStreak, setShowStreak] = useState(false);
-    const [showAvatar, setShowAvatar] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
+
+    // Get store data for HUD
+    const { totalXP, streak, currentLevel } = useGameStore();
 
     const currentCharacter = useMemo(
         () => ONBOARDING_CHARACTERS[currentIndex],
@@ -131,14 +133,14 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
         // Progressive HUD reveal:
         // - After 1st char (0): Reveal XP (Right)
-        // - After 2nd char (1): Reveal Streak (Left)
-        // - After 3rd char (2): Reveal Avatar (Right, next to XP)
+        // - After 2nd char (1): Reveal Streak (Right, next to XP)
+        // - After 3rd char (2): Reveal Profile (Left)
         if (currentIndex === 0) {
             setTimeout(() => setShowXP(true), 400);
         } else if (currentIndex === 1) {
             setTimeout(() => setShowStreak(true), 400);
         } else if (currentIndex === 2) {
-            setTimeout(() => setShowAvatar(true), 400);
+            setTimeout(() => setShowProfile(true), 400);
         }
 
         // Auto-advance after brief celebration
@@ -185,15 +187,16 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             <div className="onboarding-hud">
                 <div className="hud-left">
                     <AnimatePresence>
-                        {showStreak && (
+                        {showProfile && (
                             <motion.div
-                                key="streak"
-                                className="hud-item"
+                                key="profile"
+                                className="hud-pill profile-pill"
                                 initial={{ opacity: 0, x: -20, scale: 0.8 }}
                                 animate={{ opacity: 1, x: 0, scale: 1 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             >
-                                <StreakCounter size="sm" />
+                                <span className="profile-avatar">🐼</span>
+                                <span className="pill-value">Lvl {currentLevel}</span>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -201,28 +204,30 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
                 <div className="hud-right">
                     <AnimatePresence>
-                        {showXP && (
+                        {showStreak && (
                             <motion.div
-                                key="xp"
-                                className="hud-item"
+                                key="streak"
+                                className="hud-pill"
                                 initial={{ opacity: 0, x: 20, scale: 0.8 }}
                                 animate={{ opacity: 1, x: 0, scale: 1 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             >
-                                <XPDisplay size="sm" />
+                                <span className="pill-icon">🔥</span>
+                                <span className="pill-value pill-highlight">{streak.currentStreak}</span>
                             </motion.div>
                         )}
                     </AnimatePresence>
                     <AnimatePresence>
-                        {showAvatar && (
+                        {showXP && (
                             <motion.div
-                                key="avatar"
-                                className="hud-item hud-avatar"
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
+                                key="xp"
+                                className="hud-pill"
+                                initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             >
-                                <div className="avatar-circle">🐼</div>
+                                <span className="pill-icon" style={{ color: '#fbbf24' }}>⭐</span>
+                                <span className="pill-value pill-highlight">{totalXP} XP</span>
                             </motion.div>
                         )}
                     </AnimatePresence>

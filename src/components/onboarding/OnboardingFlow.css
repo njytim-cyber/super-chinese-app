@@ -23,17 +23,20 @@
     padding: 0 var(--space-4);
     display: flex;
     justify-content: space-between;
-    /* Space between left and right containers */
-    align-items: flex-start;
+    align-items: center;
+    /* Center items vertically */
     z-index: 10;
     box-sizing: border-box;
+    height: 48px;
+    /* Fixed height for consistency */
 }
 
 .hud-left,
 .hud-right {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
+    height: 100%;
 }
 
 .hud-left {
@@ -44,17 +47,56 @@
     justify-content: flex-end;
 }
 
-.avatar-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--bg-card);
+/* Common Pill Styles for Consistency */
+.hud-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(30, 41, 59, 0.8);
+    /* var(--bg-card-hover) equivalent */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 9999px;
+    height: 36px;
+    /* Consistent height */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.pill-icon {
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    box-shadow: var(--shadow-sm);
-    border: 2px solid var(--border-color);
+}
+
+.pill-value {
+    color: var(--text-primary);
+}
+
+.pill-highlight {
+    color: var(--text-highlight);
+    /* For XP/Streak numbers */
+}
+
+/* Specific Pill Overrides */
+.profile-pill {
+    padding-left: 6px;
+    /* Less padding for avatar */
+}
+
+.profile-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
 }
 
 /* Empty spacer to push XP to right when streak not visible */
