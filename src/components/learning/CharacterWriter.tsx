@@ -15,6 +15,7 @@ export interface CharacterWriterRef {
     animate: () => void;
     quiz: () => void;
     reset: () => void;
+    hint: () => void;
 }
 
 const WRITER_OPTIONS = {
@@ -36,6 +37,7 @@ export const CharacterWriter = forwardRef<CharacterWriterRef, CharacterWriterPro
         const containerRef = useRef<HTMLDivElement>(null);
         const writerRef = useRef<HanziWriter | null>(null);
         const hasStartedRef = useRef(false);
+        const currentStrokeRef = useRef(0);
 
         const startAnimation = useCallback(() => {
             if (!writerRef.current) return;
@@ -46,11 +48,22 @@ export const CharacterWriter = forwardRef<CharacterWriterRef, CharacterWriterPro
 
         const startQuiz = useCallback(() => {
             if (!writerRef.current) return;
+            currentStrokeRef.current = 0; // Reset stroke count
             writerRef.current.quiz({
                 onComplete: () => onComplete?.(),
-                onCorrectStroke: () => onCorrectStroke?.(),
+                onCorrectStroke: () => {
+                    currentStrokeRef.current += 1;
+                    onCorrectStroke?.();
+                },
             });
         }, [onComplete, onCorrectStroke]);
+
+        const hint = useCallback(() => {
+            if (writerRef.current) {
+                // Animate the current stroke as a hint
+                writerRef.current.animateStroke(currentStrokeRef.current);
+            }
+        }, []);
 
         const reset = useCallback(() => {
             if (writerRef.current) {
@@ -63,7 +76,8 @@ export const CharacterWriter = forwardRef<CharacterWriterRef, CharacterWriterPro
             animate: startAnimation,
             quiz: startQuiz,
             reset,
-        }), [startAnimation, startQuiz, reset]);
+            hint,
+        }), [startAnimation, startQuiz, reset, hint]);
 
         useEffect(() => {
             if (!containerRef.current) return;

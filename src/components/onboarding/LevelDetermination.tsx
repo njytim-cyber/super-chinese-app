@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui';
-import { CharacterWriter } from '../learning';
-import { useGameStore } from '../../stores';
+import { CharacterWriter } from '../learning/CharacterWriter';
+import type { CharacterWriterRef } from '../learning/CharacterWriter';
 import '../onboarding/OnboardingFlow.css'; // Reusing styles for now
 
 interface LevelDeterminationProps {
@@ -15,7 +15,7 @@ type Step = 'question' | 'write_guided' | 'mcq_english' | 'write_direct' | 'mcq_
 export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
     const { t } = useTranslation();
     const [step, setStep] = useState<Step>('question');
-    const [selectedOption, setSelectedOption] = useState<number | null>(null);
+    // const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
     // Direct input state
     const [input1, setInput1] = useState('');
@@ -23,7 +23,7 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
     const [error, setError] = useState('');
 
     const handleOptionSelect = (option: number) => {
-        setSelectedOption(option);
+        // setSelectedOption(option);
         switch (option) {
             case 1:
                 setStep('write_guided');
@@ -57,14 +57,10 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
         }
     };
 
-    const handleGuidedComplete = () => {
-        // After writing both chars? Or just one?
-        // Let's assume they write 十 then 二.
-        // For simplicity reusing CharacterWriter one by one might be tricky without state.
-        // Let's just create a sequence or a simple completion.
-        // For now, let's just complete as this is a placeholder for the logic.
+    /* const handleGuidedComplete = () => {
+        // ... unused ...
         onComplete();
-    };
+    }; */
 
     // Shared container animation
     const containerVariants = {
@@ -89,16 +85,16 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                         <h2 style={{ marginBottom: '1.5rem' }}>{t('onboarding.levelDetermination.question')}</h2>
 
                         <div className="options-grid" style={{ display: 'grid', gap: '1rem', width: '100%' }}>
-                            <Button variant="outline" onClick={() => handleOptionSelect(1)}>
+                            <Button variant="secondary" onClick={() => handleOptionSelect(1)}>
                                 {t('onboarding.levelDetermination.options.option1')}
                             </Button>
-                            <Button variant="outline" onClick={() => handleOptionSelect(2)}>
+                            <Button variant="secondary" onClick={() => handleOptionSelect(2)}>
                                 {t('onboarding.levelDetermination.options.option2')}
                             </Button>
-                            <Button variant="outline" onClick={() => handleOptionSelect(3)}>
+                            <Button variant="secondary" onClick={() => handleOptionSelect(3)}>
                                 {t('onboarding.levelDetermination.options.option3')}
                             </Button>
-                            <Button variant="outline" onClick={() => handleOptionSelect(4)}>
+                            <Button variant="secondary" onClick={() => handleOptionSelect(4)}>
                                 {t('onboarding.levelDetermination.options.option4')}
                             </Button>
                         </div>
@@ -117,10 +113,10 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                         <h2 style={{ marginBottom: '1.5rem' }}>{t('onboarding.levelDetermination.mcqEnglish')}</h2>
                         <div className="options-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', width: '100%' }}>
                             {/* Options: 一 (1), 六 (6), 十二 (12), 八 (8) */}
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>一</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>六</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(true)} style={{ fontSize: '1.5rem' }}>十二</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>八</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>一</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>六</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(true)} style={{ fontSize: '1.5rem' }}>十二</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>八</Button>
                         </div>
                         {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
                     </motion.div>
@@ -137,10 +133,10 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                     >
                         <h2 style={{ marginBottom: '1.5rem' }}>{t('onboarding.levelDetermination.mcqChinese')}</h2>
                         <div className="options-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', width: '100%' }}>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>一</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>六</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(true)} style={{ fontSize: '1.5rem' }}>十二</Button>
-                            <Button variant="outline" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>八</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>一</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>六</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(true)} style={{ fontSize: '1.5rem' }}>十二</Button>
+                            <Button variant="secondary" onClick={() => handleMcqAnswer(false)} style={{ fontSize: '1.5rem' }}>八</Button>
                         </div>
                         {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
                     </motion.div>
@@ -155,7 +151,7 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                         exit="exit"
                         className="level-determination-screen"
                     >
-                        <h2 style={{ marginBottom: '1.5rem' }}>Write "12" in Chinese</h2>
+                        <h2 style={{ marginBottom: '1.5rem' }}>请写出 "12" 的中文</h2>
                         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
                             <input
                                 style={{ width: '60px', height: '60px', fontSize: '2rem', textAlign: 'center', border: '2px solid #ddd', borderRadius: '8px' }}
@@ -168,14 +164,14 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                                 onChange={(e) => setInput2(e.target.value)}
                             />
                         </div>
-                        <Button onClick={handleDirectInputSubmit}>Submit</Button>
+                        <Button onClick={handleDirectInputSubmit}>提交</Button>
                         {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
                     </motion.div>
                 )}
 
                 {step === 'write_guided' && (
                     <div className="guided-writer-container">
-                        {/* Reusing CharacterWriter for guided writing. 
+                        {/* Reusing CharacterWriter for guided writing.
                            Since I can't easily chain two writers in this simple block without state management,
                            I'll simulate it or just show one for "12" if possible, but 12 is two chars.
                            I will implement a simple sequential writer here.
@@ -192,6 +188,7 @@ function GuidedWriter({ onComplete }: { onComplete: () => void }) {
     const [charIndex, setCharIndex] = useState(0);
     const chars = ['shi', 'er']; // ten, two
     const charMap: Record<string, string> = { 'shi': '十', 'er': '二' };
+    const writerRef = useRef<CharacterWriterRef>(null);
 
     const handleCharComplete = () => {
         if (charIndex < chars.length - 1) {
@@ -201,20 +198,29 @@ function GuidedWriter({ onComplete }: { onComplete: () => void }) {
         }
     };
 
+    const handleHint = () => {
+        writerRef.current?.hint();
+    };
+
     const currentChar = chars[charIndex];
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h3 style={{ marginBottom: '1rem' }}>Let's write: {charMap[currentChar]}</h3>
-            <CharacterWriter
-                key={currentChar}
-                character={charMap[currentChar]}
-                mode="demo" // Start with demo then practice? User selected "Write together". 
-                // "Let's write out the answer together" implies guided.
-                size={280}
-                onComplete={handleCharComplete}
-                autoStart={true}
-            />
+            <div style={{ position: 'relative' }}>
+                <CharacterWriter
+                    ref={writerRef}
+                    key={currentChar}
+                    character={charMap[currentChar]}
+                    mode="quiz" // Interactive mode
+                    size={280}
+                    onComplete={handleCharComplete}
+                    autoStart={true}
+                />
+            </div>
+            <Button variant="secondary" size="sm" onClick={handleHint} style={{ marginTop: '1rem' }}>
+                Show Hint
+            </Button>
         </div>
     );
 }
