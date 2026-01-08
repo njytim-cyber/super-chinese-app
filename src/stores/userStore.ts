@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserPreferences, DEFAULT_USER_PREFERENCES, SupportedLanguage } from '../types/user.types';
+import { DEFAULT_USER_PREFERENCES } from '../types/user.types';
+import type { UserPreferences, SupportedLanguage } from '../types/user.types';
 import { changeLanguage } from '../i18n';
 
 interface UserStore {

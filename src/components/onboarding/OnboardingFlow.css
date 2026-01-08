@@ -1,0 +1,181 @@
+.onboarding-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    background-image: var(--gradient-background);
+    z-index: 100;
+    padding: var(--space-4);
+    padding-top: max(var(--space-4), var(--safe-top));
+    padding-bottom: max(var(--space-4), var(--safe-bottom));
+}
+
+.onboarding-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Intro Screen */
+.onboarding-emoji {
+    font-size: 5rem;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+.onboarding-title {
+    font-size: var(--font-size-2xl);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.onboarding-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+/* Progress Dots */
+.onboarding-progress {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    transition: all var(--transition-base);
+}
+
+.progress-dot.active {
+    background: var(--gradient-primary);
+    transform: scale(1.2);
+}
+
+.progress-dot.completed {
+    background: var(--success-500);
+}
+
+/* Character Info */
+.character-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.character-pinyin {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--secondary-400);
+}
+
+.character-meaning {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+}
+
+/* Writer Container */
+.writer-container {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-lg);
+}
+
+.hanzi-writer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hanzi-writer svg {
+    touch-action: none;
+}
+
+.onboarding-hint {
+    font-size: var(--font-size-base);
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Success Screen */
+.success-character {
+    font-family: var(--font-family-chinese);
+    font-size: 8rem;
+    color: var(--text-primary);
+    text-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+}
+
+.success-message {
+    font-size: var(--font-size-2xl);
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Complete Screen */
+.complete-characters {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.complete-char {
+    font-family: var(--font-family-chinese);
+    font-size: 3rem;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.complete-title {
+    font-size: var(--font-size-2xl);
+    color: var(--text-primary);
+}
+
+.complete-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 374px) {
+    .onboarding-emoji {
+        font-size: 4rem;
+    }
+
+    .success-character {
+        font-size: 6rem;
+    }
+
+    .complete-char {
+        font-size: 2rem;
+        padding: var(--space-2);
+    }
+
+    .writer-container {
+        padding: var(--space-2);
+    }
+}
+
+@media (min-width: 768px) {
+    .onboarding-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .success-character {
+        font-size: 10rem;
+    }
+}

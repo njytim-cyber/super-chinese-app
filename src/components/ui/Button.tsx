@@ -1,4 +1,5 @@
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
 import './Button.css';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'success' | 'danger';

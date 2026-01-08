@@ -1,12 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
-    GameState,
     INITIAL_GAME_STATE,
     calculateLevel,
     getLevelInfo,
-    XPEvent,
 } from '../types/game.types';
+import type { GameState, XPEvent } from '../types/game.types';
 
 interface GameStore extends GameState {
     // Actions

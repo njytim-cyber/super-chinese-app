@@ -1,0 +1,144 @@
+.page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+}
+
+.home-page {
+    gap: var(--space-6);
+}
+
+/* Header */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+/* Welcome */
+.home-welcome {
+    text-align: center;
+    padding: var(--space-4) 0;
+}
+
+.home-welcome h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-2);
+}
+
+.home-welcome p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+/* Daily Goal Card */
+.daily-goal-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.daily-goal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.daily-goal-icon {
+    font-size: 1.5rem;
+}
+
+.daily-goal-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.daily-goal-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.daily-goal-bar {
+    flex: 1;
+    height: 12px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.daily-goal-fill {
+    height: 100%;
+    background: var(--gradient-success);
+    border-radius: var(--radius-full);
+}
+
+.daily-goal-count {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* Menu Grid */
+.home-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5);
+}
+
+.menu-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-xl);
+}
+
+.menu-label {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+/* CTA */
+.home-cta {
+    margin-top: auto;
+    padding-bottom: max(var(--space-4), var(--safe-bottom));
+}
+
+/* Responsive */
+@media (max-width: 374px) {
+    .home-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .home-menu {
+        gap: var(--space-3);
+    }
+
+    .menu-item {
+        padding: var(--space-4);
+    }
+
+    .menu-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,57 @@
+.streak-counter {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+}
+
+.streak-active {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.streak-counter-sm {
+    padding: var(--space-1) var(--space-2);
+}
+
+.streak-counter-lg {
+    padding: var(--space-3) var(--space-4);
+}
+
+.streak-flame {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.streak-counter-sm .streak-flame {
+    font-size: 1rem;
+}
+
+.streak-counter-lg .streak-flame {
+    font-size: 2rem;
+}
+
+.streak-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.streak-count {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.streak-counter-sm .streak-count {
+    font-size: var(--font-size-base);
+}
+
+.streak-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
