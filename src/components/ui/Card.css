@@ -1,0 +1,45 @@
+.card {
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.card-padding-none {
+    padding: 0;
+}
+
+.card-padding-sm {
+    padding: 0.75rem;
+}
+
+.card-padding-md {
+    padding: 1.25rem;
+}
+
+.card-padding-lg {
+    padding: 2rem;
+}
+
+/* Variants */
+.card-default {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.card-elevated {
+    background: var(--bg-secondary);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-clickable {
+    cursor: pointer;
+}
+
+.card-clickable:hover {
+    border-color: var(--accent-color);
+}

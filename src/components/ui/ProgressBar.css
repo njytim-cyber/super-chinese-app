@@ -1,0 +1,51 @@
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.progress-track {
+    flex: 1;
+    background: var(--bg-tertiary);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-sm .progress-track {
+    height: 6px;
+}
+
+.progress-md .progress-track {
+    height: 10px;
+}
+
+.progress-lg .progress-track {
+    height: 14px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Variants */
+.progress-xp .progress-fill {
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+}
+
+.progress-streak .progress-fill {
+    background: linear-gradient(90deg, #fa709a 0%, #fee140 100%);
+}
+
+.progress-success .progress-fill {
+    background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+}
+
+.progress-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
