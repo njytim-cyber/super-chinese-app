@@ -102,6 +102,26 @@
     touch-action: none;
 }
 
+/* Animated Hand Guide */
+.animated-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.hand-emoji {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Writer container needs relative for hand positioning */
+.writer-container {
+    position: relative;
+}
+
 .onboarding-hint {
     font-size: var(--font-size-base);
     color: var(--text-muted);
@@ -109,19 +129,61 @@
 }
 
 /* Success Screen */
+.success-screen-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+}
+
+.success-character-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(244, 63, 94, 0.2) 100%);
+    border: 3px solid rgba(139, 92, 246, 0.5);
+    border-radius: var(--radius-2xl);
+    box-shadow:
+        0 0 60px rgba(139, 92, 246, 0.3),
+        inset 0 0 30px rgba(139, 92, 246, 0.1);
+    animation: successGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes successGlow {
+    from {
+        box-shadow:
+            0 0 40px rgba(139, 92, 246, 0.3),
+            inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+
+    to {
+        box-shadow:
+            0 0 80px rgba(139, 92, 246, 0.5),
+            inset 0 0 40px rgba(139, 92, 246, 0.2);
+    }
+}
+
 .success-character {
     font-family: var(--font-family-chinese);
-    font-size: 8rem;
-    color: var(--text-primary);
-    text-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+    font-size: 7rem;
+    font-weight: 400;
+    color: white;
+    text-shadow:
+        0 4px 20px rgba(139, 92, 246, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.3);
+    line-height: 1;
 }
 
 .success-message {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
     background: var(--gradient-gold);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: none;
 }
 
 /* Complete Screen */

@@ -1,0 +1,11 @@
+.character-writer {
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.character-writer svg {
+    touch-action: none;
+    display: block;
+}
