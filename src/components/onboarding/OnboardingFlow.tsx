@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui';
-import { XPPopup } from '../game';
+import { XPDisplay, StreakCounter } from '../game';
 import { CharacterWriter } from '../learning';
 import { useGameStore } from '../../stores';
 import { ONBOARDING_CHARACTERS } from '../../types';
@@ -48,7 +48,30 @@ function AnimatedHand({ show }: { show: boolean }) {
     );
 }
 
-type Phase = 'demo' | 'practice' | 'success' | 'complete';
+// Celebration overlay that appears briefly
+function CelebrationOverlay({ message, show }: { message: string; show: boolean }) {
+    if (!show) return null;
+
+    return (
+        <motion.div
+            className="celebration-overlay"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.2 }}
+            transition={{ duration: 0.3 }}
+        >
+            <motion.span
+                className="celebration-text"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 0.5 }}
+            >
+                {message}
+            </motion.span>
+        </motion.div>
+    );
+}
+
+type Phase = 'demo' | 'practice' | 'celebrating' | 'complete';
 
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     const { t } = useTranslation();
@@ -56,11 +79,15 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [phase, setPhase] = useState<Phase>('demo');
-    const [showXPPopup, setShowXPPopup] = useState(false);
-    const [xpAmount, setXpAmount] = useState(0);
-    const [encouragement, setEncouragement] = useState('');
     const [showHandGuide, setShowHandGuide] = useState(false);
-    const [writerKey, setWriterKey] = useState(0); // Force remount on character change
+    const [writerKey, setWriterKey] = useState(0);
+    const [celebrationMessage, setCelebrationMessage] = useState('');
+    const [showCelebration, setShowCelebration] = useState(false);
+
+    // Progressive HUD reveal
+    const [showXP, setShowXP] = useState(false);
+    const [showStreak, setShowStreak] = useState(false);
+    const [showAvatar, setShowAvatar] = useState(false);
 
     const currentCharacter = useMemo(
         () => ONBOARDING_CHARACTERS[currentIndex],
@@ -75,18 +102,17 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         setWriterKey(k => k + 1);
     }, []);
 
-    // Handle character successfully written
+    // Handle character successfully written - quick celebration then advance
     const handlePracticeComplete = useCallback(() => {
-        // Celebration
+        // Celebration effects
         playSuccessSound(currentIndex);
         fireConfetti(currentIndex);
 
         // Speak character for reinforcement
-        setTimeout(() => speakChinese(currentCharacter.character), 300);
+        speakChinese(currentCharacter.character);
 
         // Award XP
         const reward = XP_REWARDS[currentIndex] ?? 10;
-        setXpAmount(reward);
         addXP({ type: 'character_complete', amount: reward, timestamp: new Date() });
 
         // Start streak on first character
@@ -97,33 +123,44 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         // Record learned character
         addCharacterLearned(currentCharacter.character);
 
-        // Show encouragement
-        setEncouragement(t(ENCOURAGEMENT_KEYS[currentIndex] ?? ENCOURAGEMENT_KEYS[0]));
-
-        // Transition to success
-        setPhase('success');
-        setShowXPPopup(true);
+        // Show celebration overlay
+        setCelebrationMessage(t(ENCOURAGEMENT_KEYS[currentIndex] ?? ENCOURAGEMENT_KEYS[0]));
+        setShowCelebration(true);
+        setPhase('celebrating');
         setShowHandGuide(false);
-    }, [currentIndex, currentCharacter, addXP, updateStreak, addCharacterLearned, t]);
+
+        // Progressive HUD reveal:
+        // - After 1st char (0): Reveal XP (Right)
+        // - After 2nd char (1): Reveal Streak (Left)
+        // - After 3rd char (2): Reveal Avatar (Right, next to XP)
+        if (currentIndex === 0) {
+            setTimeout(() => setShowXP(true), 400);
+        } else if (currentIndex === 1) {
+            setTimeout(() => setShowStreak(true), 400);
+        } else if (currentIndex === 2) {
+            setTimeout(() => setShowAvatar(true), 400);
+        }
+
+        // Auto-advance after brief celebration
+        setTimeout(() => {
+            setShowCelebration(false);
+
+            if (isLastCharacter) {
+                fireGrandConfetti();
+                setPhase('complete');
+            } else {
+                // Move to next character
+                setCurrentIndex(i => i + 1);
+                setPhase('demo');
+                setWriterKey(k => k + 1);
+            }
+        }, 1200);
+    }, [currentIndex, currentCharacter, addXP, updateStreak, addCharacterLearned, t, isLastCharacter]);
 
     // Handle first correct stroke
     const handleCorrectStroke = useCallback(() => {
         setShowHandGuide(false);
     }, []);
-
-    // Proceed to next character or completion
-    const handleNext = useCallback(() => {
-        setShowXPPopup(false);
-
-        if (isLastCharacter) {
-            fireGrandConfetti();
-            setPhase('complete');
-        } else {
-            setCurrentIndex(i => i + 1);
-            setPhase('demo');
-            setWriterKey(k => k + 1);
-        }
-    }, [isLastCharacter]);
 
     // Finish onboarding
     const handleFinish = useCallback(() => {
@@ -144,9 +181,62 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
     return (
         <div className="onboarding-container">
+            {/* HUD with progressive reveal */}
+            <div className="onboarding-hud">
+                <div className="hud-left">
+                    <AnimatePresence>
+                        {showStreak && (
+                            <motion.div
+                                key="streak"
+                                className="hud-item"
+                                initial={{ opacity: 0, x: -20, scale: 0.8 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                            >
+                                <StreakCounter size="sm" />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+
+                <div className="hud-right">
+                    <AnimatePresence>
+                        {showXP && (
+                            <motion.div
+                                key="xp"
+                                className="hud-item"
+                                initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                            >
+                                <XPDisplay size="sm" />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {showAvatar && (
+                            <motion.div
+                                key="avatar"
+                                className="hud-item hud-avatar"
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                            >
+                                <div className="avatar-circle">🐼</div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            </div>
+
+            {/* Celebration overlay */}
+            <AnimatePresence>
+                <CelebrationOverlay message={celebrationMessage} show={showCelebration} />
+            </AnimatePresence>
+
             <AnimatePresence mode="wait">
-                {/* Writing Phase (Demo & Practice) */}
-                {(phase === 'demo' || phase === 'practice') && (
+                {/* Writing Phase (Demo, Practice, Celebrating) */}
+                {(phase === 'demo' || phase === 'practice' || phase === 'celebrating') && (
                     <motion.div
                         key={`writing-${currentIndex}`}
                         className="onboarding-screen"
@@ -158,16 +248,6 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                             if (phase === 'practice') handlePracticeStart();
                         }}
                     >
-                        {/* Progress dots */}
-                        <div className="onboarding-progress">
-                            {ONBOARDING_CHARACTERS.map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`progress-dot ${i < currentIndex ? 'completed' : ''} ${i === currentIndex ? 'active' : ''}`}
-                                />
-                            ))}
-                        </div>
-
                         {/* Character info */}
                         <div className="character-info">
                             <span className="character-pinyin">{currentCharacter.pinyin}</span>
@@ -185,57 +265,22 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                                 character={currentCharacter.character}
                                 mode={phase === 'demo' ? 'demo' : 'quiz'}
                                 size={280}
-                                onComplete={phase === 'demo' ? handleDemoComplete : handlePracticeComplete}
+                                onComplete={phase === 'demo' ? handleDemoComplete : (phase === 'practice' ? handlePracticeComplete : undefined)}
                                 onCorrectStroke={handleCorrectStroke}
+                                autoStart={phase !== 'celebrating'}
                             />
-                            <AnimatedHand show={showHandGuide} />
+                            <AnimatedHand show={showHandGuide && phase === 'practice'} />
                         </motion.div>
 
-                        {/* Hint text */}
-                        <p className="onboarding-hint">
-                            {phase === 'demo' ? t('onboarding.watchFirst') : t('onboarding.yourTurn')}
-                        </p>
-                    </motion.div>
-                )}
-
-                {/* Success Phase */}
-                {phase === 'success' && (
-                    <motion.div
-                        key="success"
-                        className="onboarding-screen"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <motion.div
-                            className="success-character-container"
-                            initial={{ scale: 0, rotate: -10 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                        >
-                            <span className="success-character">{currentCharacter.character}</span>
-                        </motion.div>
-
-                        <motion.h2
-                            className="success-message"
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2 }}
-                        >
-                            {encouragement}
-                        </motion.h2>
-
-                        <XPPopup amount={xpAmount} show={showXPPopup} />
-
-                        <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                        >
-                            <Button size="lg" onClick={handleNext}>
-                                {isLastCharacter ? t('onboarding.complete') : t('onboarding.nextCharacter')}
-                            </Button>
-                        </motion.div>
+                        {/* Progress dots */}
+                        <div className="onboarding-progress" style={{ marginTop: '1rem' }}>
+                            {ONBOARDING_CHARACTERS.map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`progress-dot ${i < currentIndex ? 'completed' : ''} ${i === currentIndex ? 'active' : ''}`}
+                                />
+                            ))}
+                        </div>
                     </motion.div>
                 )}
 
