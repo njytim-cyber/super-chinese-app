@@ -33,9 +33,18 @@ const en = {
         keepItUp: 'Keep it up!',
         nextCharacter: 'Next Character',
         complete: 'Complete!',
-        youLearned: 'You learned',
-        characters: 'characters',
-        continueToApp: 'Start Learning',
+        continueToApp: "Let's Revise!",
+        levelDetermination: {
+            question: 'How many eggs are there?',
+            options: {
+                option1: "Let's write out the answer together.",
+                option2: "I can read basic Chinese, I'd like to choose from a list.",
+                option3: "I can write that in without help",
+                option4: "I've studied this before",
+            },
+            mcqEnglish: 'How many eggs are there?',
+            mcqChinese: '这里有多少个鸡蛋?',
+        },
     },
 
     // Game

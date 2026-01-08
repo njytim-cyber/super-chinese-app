@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui';
 import { CharacterWriter } from '../learning';
+import { LevelDetermination } from './LevelDetermination';
 import { useGameStore } from '../../stores';
 import { ONBOARDING_CHARACTERS } from '../../types';
 import { playSuccessSound, speakChinese, fireConfetti, fireGrandConfetti } from '../../utils';
@@ -70,7 +71,7 @@ function CelebrationOverlay({ message, show }: { message: string; show: boolean 
     );
 }
 
-type Phase = 'demo' | 'practice' | 'celebrating' | 'complete';
+type Phase = 'demo' | 'practice' | 'celebrating' | 'complete' | 'level_determination';
 
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     const { t } = useTranslation();
@@ -166,6 +167,11 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
 
     // Finish onboarding
     const handleFinish = useCallback(() => {
+        // completeOnboarding(); // Moved to after level determination
+        setPhase('level_determination');
+    }, []);
+
+    const handleLevelDeterminationComplete = useCallback(() => {
         completeOnboarding();
         onComplete();
     }, [completeOnboarding, onComplete]);
@@ -317,13 +323,23 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                         </motion.div>
 
                         <h2 className="complete-title">{t('onboarding.complete')}</h2>
-                        <p className="complete-subtitle">
-                            {t('onboarding.youLearned')} {ONBOARDING_CHARACTERS.length} {t('onboarding.characters')}!
-                        </p>
+                        {/* Removed 'You learned X characters' text */}
 
                         <Button size="lg" variant="success" onClick={handleFinish}>
                             {t('onboarding.continueToApp')}
                         </Button>
+                    </motion.div>
+                )}
+
+                {/* Level Determination Phase */}
+                {phase === 'level_determination' && (
+                    <motion.div
+                        key="level-determination"
+                        className="onboarding-screen"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        <LevelDetermination onComplete={handleLevelDeterminationComplete} />
                     </motion.div>
                 )}
             </AnimatePresence>
