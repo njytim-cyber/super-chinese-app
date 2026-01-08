@@ -3,7 +3,6 @@
    Fun, playful, mobile-first responsive design
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=ZCOOL+KuaiLe&display=swap');
 
 /* CSS Custom Properties - Design Tokens */
 :root {
@@ -60,7 +59,8 @@
 
   /* Typography */
   --font-family: 'M PLUS Rounded 1c', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-chinese: 'ZCOOL KuaiLe', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', cursive;
+  --font-family-chinese: 'Ma Shan Zheng', 'Kaiti', 'STKaiti', 'KaiTi', '楷体', 'SimKai', serif;
+
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
