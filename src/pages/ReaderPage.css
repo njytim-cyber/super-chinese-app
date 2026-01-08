@@ -1,0 +1,195 @@
+.reader-page {
+    min-height: 100vh;
+    background: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    padding: var(--spacing-md);
+    padding-bottom: calc(var(--spacing-xl) * 2);
+}
+
+/* Header */
+.reader-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.reader-title {
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    color: var(--md-sys-color-on-surface);
+}
+
+.reader-title-pinyin {
+    font-size: 1rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: var(--spacing-xs);
+}
+
+/* Stats Bar */
+.reader-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--surface-container-high);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+}
+
+.stat-icon {
+    font-size: 1.1rem;
+}
+
+.stat-value {
+    font-weight: var(--font-weight-bold);
+    color: var(--md-sys-color-primary);
+}
+
+.stat-label {
+    color: var(--text-muted);
+}
+
+/* Content */
+.reader-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.reader-paragraph {
+    margin-bottom: var(--spacing-lg);
+    background: var(--surface-container);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+}
+
+.paragraph-chinese {
+    font-size: 1.5rem;
+    line-height: 2;
+    margin: 0 0 var(--spacing-sm) 0;
+}
+
+.paragraph-pinyin {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Interactive Words */
+.reader-word {
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    display: inline-block;
+}
+
+.reader-word:hover {
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.reader-word.added {
+    background: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+}
+
+/* Word Popup */
+.word-popup {
+    position: fixed;
+    z-index: 1000;
+    background: var(--surface-container-highest);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-xl);
+    min-width: 200px;
+    max-width: 280px;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.popup-chinese {
+    font-size: 1.8rem;
+    font-weight: var(--font-weight-bold);
+}
+
+.popup-speak-btn {
+    background: var(--md-sys-color-secondary-container);
+    border: none;
+    border-radius: var(--radius-full);
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.popup-speak-btn:hover {
+    transform: scale(1.1);
+}
+
+.popup-speak-btn:active {
+    transform: scale(0.95);
+}
+
+.popup-pinyin {
+    font-size: 1rem;
+    color: var(--md-sys-color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.popup-meaning {
+    font-size: 1rem;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: var(--spacing-sm);
+}
+
+.popup-hsk {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--surface-container);
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.popup-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.popup-add-btn {
+    flex: 1;
+    background: var(--gradient-primary);
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.popup-add-btn:hover {
+    opacity: 0.9;
+}
+
+.popup-add-btn:active {
+    transform: scale(0.98);
+}

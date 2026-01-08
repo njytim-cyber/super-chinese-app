@@ -1,0 +1,126 @@
+/* Combo Display Styles */
+
+.combo-display {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* On fire state (3+ combo) */
+.combo-display.on-fire {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(254, 202, 87, 0.2));
+    border-color: rgba(255, 165, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.3);
+}
+
+/* Super state (5+ combo) */
+.combo-display.super {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(254, 202, 87, 0.3));
+    border-color: #ffa500;
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+    animation: super-pulse 0.5s infinite;
+}
+
+/* Ultra state (10+ combo) */
+.combo-display.ultra {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 107, 107, 0.3));
+    border-color: #ffd700;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.5),
+        0 0 40px rgba(255, 215, 0, 0.3);
+    animation: ultra-glow 0.3s infinite alternate;
+}
+
+@keyframes super-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes ultra-glow {
+    from {
+        box-shadow:
+            0 0 20px rgba(255, 215, 0, 0.5),
+            0 0 40px rgba(255, 215, 0, 0.3);
+    }
+
+    to {
+        box-shadow:
+            0 0 30px rgba(255, 215, 0, 0.7),
+            0 0 60px rgba(255, 215, 0, 0.4);
+    }
+}
+
+.combo-fire {
+    font-size: 1.25rem;
+}
+
+.combo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.combo-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.combo-display.on-fire .combo-number {
+    color: #ffa500;
+}
+
+.combo-display.ultra .combo-number {
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.combo-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.combo-display.super .combo-label,
+.combo-display.ultra .combo-label {
+    color: #ffd700;
+}
+
+.combo-bonus {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #4caf50;
+    background: rgba(76, 175, 80, 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* Ultra sparkles */
+.ultra-sparkles {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.ultra-sparkles .sparkle {
+    position: absolute;
+    font-size: 0.75rem;
+}

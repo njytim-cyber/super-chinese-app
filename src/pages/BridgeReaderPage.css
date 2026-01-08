@@ -1,0 +1,330 @@
+/* Bridge Reader Page Styles */
+
+.bridge-reader-page {
+    min-height: 100vh;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.page-header .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.header-spacer {
+    width: 40px;
+}
+
+.level-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.page-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Passage list */
+.passage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.passage-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.passage-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.passage-level {
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+}
+
+.passage-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.passage-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.passage-title-en {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+}
+
+.passage-arrow {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.25rem;
+}
+
+/* Reading mode */
+.reading-mode .reading-content {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.passage-text {
+    color: white;
+    font-size: 1.1rem;
+    line-height: 2;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.vocab-word {
+    color: #ffd700;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(255, 215, 0, 0.5);
+    transition: all 0.2s;
+}
+
+.vocab-word:hover,
+.vocab-word.highlighted {
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+/* Vocab list */
+.vocab-list {
+    margin-bottom: 1.5rem;
+}
+
+.vocab-list h4 {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0 0 0.75rem 0;
+}
+
+.vocab-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.vocab-chip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vocab-chip:hover,
+.vocab-chip.active {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.5);
+}
+
+.start-quiz-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.start-quiz-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Quiz mode */
+.quiz-mode .quiz-progress {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.quiz-content {
+    padding: 1rem 0;
+}
+
+.question-text {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.5;
+}
+
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.answer-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s;
+}
+
+.answer-option:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.answer-option:disabled {
+    cursor: default;
+}
+
+.answer-option.correct {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4caf50;
+}
+
+.answer-option.incorrect {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: #f44336;
+}
+
+.option-letter {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.option-text {
+    flex: 1;
+    color: white;
+    font-size: 1rem;
+}
+
+/* Quiz results */
+.quiz-results {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 2rem;
+    margin: 3rem auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+.quiz-results h2 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 0 1.5rem 0;
+}
+
+.results-score {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 2rem;
+}
+
+.results-score .score {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.results-score .label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.results-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+}

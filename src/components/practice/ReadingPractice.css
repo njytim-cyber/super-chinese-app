@@ -1,0 +1,348 @@
+/* Reading Practice Styles */
+
+.reading-practice {
+    min-height: 100vh;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header - shared with Listening */
+.reading-practice .practice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+}
+
+.reading-practice .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reading-practice .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.reading-practice .progress-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.reading-practice .level-badge {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.reading-practice .question-count {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.reading-practice .streak-badge {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa500;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.reading-practice .streak-badge[data-active="true"] {
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+/* Progress bar */
+.reading-practice .progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.reading-practice .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    border-radius: 2px;
+}
+
+/* Question type badge */
+.question-type-badge {
+    align-self: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Question area */
+.reading-practice .question-area {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.reading-practice .question-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.question-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.chinese-word {
+    font-size: 3rem;
+    color: white;
+    font-weight: 500;
+}
+
+.pinyin-hint {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
+}
+
+.english-meaning {
+    font-size: 1.5rem;
+    color: white;
+    max-width: 300px;
+    line-height: 1.4;
+}
+
+.question-display.fill-blank .sentence {
+    font-size: 1.3rem;
+    color: white;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+/* Options list */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.option-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.option-btn:disabled {
+    cursor: default;
+}
+
+.option-btn.correct {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: #4caf50;
+}
+
+.option-btn.incorrect {
+    background: rgba(244, 67, 54, 0.3);
+    border-color: #f44336;
+}
+
+.option-btn.reveal-correct {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+}
+
+.option-letter {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.option-text {
+    flex: 1;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.correct-indicator {
+    color: #4caf50;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* XP Popup */
+.reading-practice .xp-popup {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    color: #1a1a2e;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    z-index: 100;
+}
+
+.reading-practice .streak-bonus {
+    font-size: 0.9rem;
+}
+
+/* Results card - shared styling */
+.reading-practice .results-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 2rem;
+    margin: auto;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.reading-practice .results-card h2 {
+    color: white;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.reading-practice .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.reading-practice .stat-item {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.reading-practice .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.reading-practice .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.reading-practice .results-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.reading-practice .btn-primary {
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.reading-practice .btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.reading-practice .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reading-practice .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .chinese-word {
+        font-size: 2.5rem;
+    }
+
+    .english-meaning {
+        font-size: 1.25rem;
+    }
+
+    .option-text {
+        font-size: 1rem;
+    }
+}

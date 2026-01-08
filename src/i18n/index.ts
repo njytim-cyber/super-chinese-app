@@ -6,14 +6,8 @@ import { en, fr } from './locales';
 const getDefaultLanguage = (): string => {
     // Check localStorage first
     const stored = localStorage.getItem('super-chinese-language');
-    if (stored && ['en', 'fr'].includes(stored)) {
+    if (stored && ['en', 'fr', 'zh', 'es', 'de', 'ja', 'ko'].includes(stored)) {
         return stored;
-    }
-
-    // Fallback to browser language
-    const browserLang = navigator.language.split('-')[0];
-    if (['en', 'fr'].includes(browserLang)) {
-        return browserLang;
     }
 
     return 'en';

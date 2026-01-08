@@ -1,14 +1,35 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { XPDisplay, StreakCounter, Badge, Card } from '../components';
-import { useGameStore } from '../stores';
+import { useGameStore, useUserStore } from '../stores';
 import { ACHIEVEMENTS } from '../types';
 import './ProfilePage.css';
 
 export function ProfilePage() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { achievements, charactersLearned, lessonsCompleted } = useGameStore();
+    const { achievements, charactersLearned, lessonsCompleted, totalXP, currentLevel, streak } = useGameStore();
+    const { profile, setDisplayName, setAvatar } = useUserStore();
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [tempName, setTempName] = useState(profile.displayName);
+    const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+
+    const AVATARS = ['🐼', '🐶', '🐱', '🐯', '🦁', '🐨', '🐻', '🐰', '🦊', '🐸', '🐵', '🐔', '🦄', '🐲', '🐹', '🦒'];
+
+    const handleSaveName = () => {
+        setDisplayName(tempName);
+        setIsEditingName(false);
+    };
+
+    const handleNameKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') handleSaveName();
+        if (e.key === 'Escape') {
+            setTempName(profile.displayName);
+            setIsEditingName(false);
+        }
+    };
 
     return (
         <div className="page profile-page">
@@ -20,10 +41,79 @@ export function ProfilePage() {
             </header>
 
             {/* Stats */}
+            {/* Avatar & Ident */}
+            <div className="profile-header-card">
+                <div className="profile-avatar-container" onClick={() => setShowAvatarPicker(true)}>
+                    <div className="profile-avatar-large">{profile.avatar}</div>
+                    <div className="avatar-edit-badge">✎</div>
+                </div>
+
+                <div className="profile-identity">
+                    {isEditingName ? (
+                        <div className="name-edit-container">
+                            <input
+                                autoFocus
+                                className="name-input"
+                                value={tempName}
+                                onChange={(e) => setTempName(e.target.value)}
+                                onKeyDown={handleNameKeyDown}
+                                onBlur={handleSaveName}
+                            />
+                        </div>
+                    ) : (
+                        <h2 className="profile-name" onClick={() => setIsEditingName(true)}>
+                            {profile.displayName} <span className="edit-icon">✎</span>
+                        </h2>
+                    )}
+                    <span className="profile-level">Level {currentLevel} • {totalXP} XP</span>
+                </div>
+            </div>
+
+            {/* Stats */}
             <div className="profile-stats">
-                <XPDisplay size="md" />
+                {/* Reusing existing components but might want to customize if they are too big */}
                 <StreakCounter size="md" />
             </div>
+
+            {/* Avatar Picker Modal */}
+            <AnimatePresence>
+                {showAvatarPicker && (
+                    <motion.div
+                        className="avatar-picker-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setShowAvatarPicker(false)}
+                    >
+                        <motion.div
+                            className="avatar-picker-content"
+                            initial={{ y: '100%' }}
+                            animate={{ y: 0 }}
+                            exit={{ y: '100%' }}
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <div className="picker-header">
+                                <h3>Choose Avatar</h3>
+                                <button onClick={() => setShowAvatarPicker(false)}>✕</button>
+                            </div>
+                            <div className="avatar-grid">
+                                {AVATARS.map(avatar => (
+                                    <button
+                                        key={avatar}
+                                        className={`avatar-option ${profile.avatar === avatar ? 'selected' : ''}`}
+                                        onClick={() => {
+                                            setAvatar(avatar);
+                                            setShowAvatarPicker(false);
+                                        }}
+                                    >
+                                        {avatar}
+                                    </button>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Quick Stats */}
             <div className="stats-grid">

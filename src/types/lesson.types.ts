@@ -3,7 +3,10 @@
 // =====================================================
 
 // Character difficulty levels
-export type CharacterDifficulty = 'basic' | 'intermediate' | 'advanced';
+// Character difficulty levels
+export type CharacterDifficulty = 'basic' | 'intermediate' | 'advanced' | 'hsk1' | 'hsk2' | 'hsk3' | 'hsk4' | 'hsk5' | 'hsk6';
+
+export type HSKLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 // Chinese character definition
 export interface ChineseCharacter {

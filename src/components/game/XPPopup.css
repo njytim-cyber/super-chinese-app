@@ -8,19 +8,23 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-6);
-    background: var(--gradient-gold);
+    background: var(--gradient-secondary);
+    /* Use secondary gradient (Gold/Amber) */
     border-radius: var(--radius-2xl);
-    box-shadow: var(--shadow-xl), 0 0 40px rgba(251, 191, 36, 0.4);
+    box-shadow: var(--shadow-xl);
+    /* Use system shadow */
 }
 
 .xp-popup-icon {
     font-size: 2rem;
     animation: pulse 0.5s ease-in-out infinite;
+    color: var(--md-sys-color-on-secondary);
 }
 
 .xp-popup-text {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--md-sys-color-on-secondary);
+    /* Dark text for contrast on Amber */
+    /* Removed text-shadow for cleaner look with dark text */
 }

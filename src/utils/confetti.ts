@@ -1,15 +1,18 @@
 import confetti from 'canvas-confetti';
 
 // Confetti configurations for escalating celebration
+// Using consistent palette: Primary (Blue), Secondary (Amber), Tertiary (Green)
+const PALETTE = ['#0077CC', '#FFC107', '#00C853', '#00A6FF', '#FFD54F'];
+
 const CONFETTI_CONFIGS = [
     { particleCount: 30, spread: 50, origin: { y: 0.6 } },
-    { particleCount: 50, spread: 70, origin: { y: 0.6 }, colors: ['#ff6b6b', '#ffd93d', '#6bcb77'] },
-    { particleCount: 80, spread: 100, origin: { y: 0.6 }, colors: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff'] },
+    { particleCount: 50, spread: 70, origin: { y: 0.6 }, colors: PALETTE.slice(0, 3) },
+    { particleCount: 80, spread: 100, origin: { y: 0.6 }, colors: PALETTE },
     {
         particleCount: 150,
         spread: 180,
         origin: { y: 0.5 },
-        colors: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#9b59b6'],
+        colors: PALETTE,
         startVelocity: 45,
         gravity: 0.8
     },
@@ -32,7 +35,7 @@ export const fireGrandConfetti = (): void => {
         particleCount: 100,
         spread: 70,
         origin: { x: 0.1, y: 0.5 },
-        colors: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#9b59b6'],
+        colors: PALETTE,
     });
 
     // Right side burst
@@ -40,7 +43,7 @@ export const fireGrandConfetti = (): void => {
         particleCount: 100,
         spread: 70,
         origin: { x: 0.9, y: 0.5 },
-        colors: ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#9b59b6'],
+        colors: PALETTE,
     });
 
     // Center burst
@@ -50,6 +53,7 @@ export const fireGrandConfetti = (): void => {
             spread: 180,
             origin: { y: 0.4 },
             startVelocity: 50,
+            colors: PALETTE,
         });
     }, 200);
 };

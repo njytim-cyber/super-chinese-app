@@ -1,50 +1,241 @@
+/* Practice Page Styles */
+
 .practice-page {
-    gap: var(--space-6);
+    min-height: 100vh;
+    padding: 1rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
-.practice-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-}
-
-.practice-card {
+/* Header */
+.practice-page-header {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: var(--space-3);
-    padding: var(--space-5);
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
 }
 
-.practice-icon {
-    font-size: 2.5rem;
-}
-
-.practice-title {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-}
-
-.practice-description {
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
+.practice-page-header h1 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 0;
 }
 
-@media (max-width: 374px) {
-    .practice-grid {
-        grid-template-columns: 1fr;
+.practice-page-header .back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.practice-page-header .back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.header-spacer {
+    width: 40px;
+}
+
+/* Level Selector */
+.level-selector {
+    margin-bottom: 1.5rem;
+}
+
+.level-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.level-pills {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.level-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.level-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.level-pill.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-color: transparent;
+    color: white;
+}
+
+/* Word count */
+.word-count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.word-count .count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.word-count .label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* Mode Grid */
+.mode-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mode-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--mode-color);
+}
+
+.mode-card:hover:not(.disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--mode-color);
+}
+
+.mode-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mode-icon {
+    font-size: 2rem;
+    width: 50px;
+    text-align: center;
+}
+
+.mode-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.mode-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.mode-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+}
+
+.mode-description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.coming-soon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* SRS Dashboard */
+.srs-dashboard {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.25rem;
+}
+
+.srs-dashboard h3 {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+}
+
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.dash-stat {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 0.75rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.dash-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.dash-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .mode-description {
+        display: none;
     }
 
-    .practice-card {
-        flex-direction: row;
-        text-align: left;
-        padding: var(--space-4);
-    }
-
-    .practice-icon {
-        font-size: 2rem;
+    .mode-card {
+        padding: 1rem;
     }
 }

@@ -1,0 +1,147 @@
+/* Achievement Badge Styles */
+
+.achievement-badge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--badge-bg);
+    border: 2px solid var(--badge-border);
+    border-radius: 16px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: visible;
+}
+
+/* Sizes */
+.achievement-badge.size-sm {
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+.achievement-badge.size-md {
+    padding: 0.875rem;
+}
+
+.achievement-badge.size-lg {
+    padding: 1.25rem;
+    border-radius: 20px;
+}
+
+/* Locked state */
+.achievement-badge.locked {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* Glow effect */
+.badge-glow {
+    position: absolute;
+    inset: -4px;
+    border-radius: 20px;
+    background: var(--badge-glow);
+    filter: blur(10px);
+    z-index: -1;
+}
+
+/* Icon */
+.badge-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.achievement-badge.size-sm .badge-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.achievement-badge.size-lg .badge-icon {
+    font-size: 2.5rem;
+}
+
+.badge-icon.grayscale {
+    filter: grayscale(100%);
+}
+
+.achievement-badge.unlocked:hover .badge-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Title */
+.badge-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.achievement-badge.size-sm .badge-title {
+    font-size: 0.65rem;
+    max-width: 60px;
+}
+
+.achievement-badge.size-lg .badge-title {
+    font-size: 0.9rem;
+    max-width: 100px;
+}
+
+/* Rarity borders */
+.achievement-badge.rarity-legendary {
+    animation: legendary-pulse 2s infinite;
+}
+
+@keyframes legendary-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+}
+
+.achievement-badge.rarity-epic {
+    animation: epic-shine 3s infinite;
+}
+
+@keyframes epic-shine {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(156, 39, 176, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(156, 39, 176, 0.5);
+    }
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+/* New indicator */
+.new-indicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.5);
+}

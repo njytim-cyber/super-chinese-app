@@ -3,3 +3,7 @@ export { LearnPage } from './LearnPage';
 export { PracticePage } from './PracticePage';
 export { ProfilePage } from './ProfilePage';
 export { SettingsPage } from './SettingsPage';
+export { ReaderPage } from './ReaderPage';
+export { ReviewPage } from './ReviewPage';
+export { BridgeReaderPage } from './BridgeReaderPage';
+export { GradedReaderPage } from './GradedReaderPage';

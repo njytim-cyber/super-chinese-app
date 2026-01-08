@@ -1,5 +1,5 @@
 .card {
-    border-radius: 16px;
+    border-radius: var(--radius-xl);
     transition: all 0.2s ease;
 }
 
@@ -8,32 +8,39 @@
 }
 
 .card-padding-sm {
-    padding: 0.75rem;
+    padding: var(--space-3);
 }
 
 .card-padding-md {
-    padding: 1.25rem;
+    padding: var(--space-5);
 }
 
 .card-padding-lg {
-    padding: 2rem;
+    padding: var(--space-8);
 }
 
 /* Variants */
 .card-default {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: var(--surface-container);
+    border: none;
+    box-shadow: var(--shadow-sm);
 }
 
 .card-elevated {
-    background: var(--bg-secondary);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    background: var(--surface-container-low);
+    box-shadow: var(--shadow-md);
 }
 
 .card-glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .card-glass {
+    background: rgba(30, 30, 40, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card-clickable {
@@ -41,5 +48,6 @@
 }
 
 .card-clickable:hover {
-    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }

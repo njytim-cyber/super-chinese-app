@@ -13,6 +13,9 @@ export interface UserPreferences {
     dailyReminderTime?: string; // HH:mm format
     showPinyin: boolean;
     strokeHintLevel: 'none' | 'outline' | 'animated';
+    zenMode: boolean; // Disable streaks/penalties for neurodivergent accessibility
+    audioSpeed: number; // 0.5-2.0 playback speed
+    learningMode: 'gamified' | 'zen' | 'focus'; // Learning style preference
 }
 
 export interface UserProfile {
@@ -35,6 +38,9 @@ export const DEFAULT_USER_PREFERENCES: UserPreferences = {
     notificationsEnabled: true,
     showPinyin: true,
     strokeHintLevel: 'animated',
+    zenMode: false,
+    audioSpeed: 1.0,
+    learningMode: 'gamified',
 };
 
 // Language metadata for the language selector

@@ -1,0 +1,136 @@
+/* Mascot Styles */
+
+.mascot {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Sizes */
+.mascot.size-sm .mascot-emoji {
+    font-size: 2rem;
+}
+
+.mascot.size-md .mascot-emoji {
+    font-size: 3.5rem;
+}
+
+.mascot.size-lg .mascot-emoji {
+    font-size: 5rem;
+}
+
+/* Decorations */
+.mascot-decorations {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.decoration {
+    position: absolute;
+    font-size: 1rem;
+}
+
+.mascot.size-lg .decoration {
+    font-size: 1.5rem;
+}
+
+/* Mascot body */
+.mascot-body {
+    position: relative;
+    display: inline-block;
+}
+
+.mascot-emoji {
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Eyes overlay (for text-based expressions) */
+.mascot-eyes {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5em;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Speech bubble */
+.speech-bubble {
+    background: white;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 200px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-bottom-color: white;
+    border-top: none;
+}
+
+.mascot.size-sm .speech-bubble {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    max-width: 150px;
+}
+
+.mascot.size-lg .speech-bubble {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.25rem;
+    max-width: 250px;
+}
+
+/* Mood-specific colors */
+.mascot.mood-happy .speech-bubble,
+.mascot.mood-excited .speech-bubble {
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+}
+
+.mascot.mood-happy .speech-bubble::after,
+.mascot.mood-excited .speech-bubble::after {
+    border-bottom-color: #fff9c4;
+}
+
+.mascot.mood-sad .speech-bubble {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+.mascot.mood-sad .speech-bubble::after {
+    border-bottom-color: #e3f2fd;
+}
+
+.mascot.mood-celebrating .speech-bubble {
+    background: linear-gradient(135deg, #ffd700, #ffb300);
+    color: #1a1a2e;
+    font-weight: 700;
+}
+
+.mascot.mood-celebrating .speech-bubble::after {
+    border-bottom-color: #ffd700;
+}
+
+.mascot.mood-encouraging .speech-bubble {
+    background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
+}
+
+.mascot.mood-encouraging .speech-bubble::after {
+    border-bottom-color: #c8e6c9;
+}

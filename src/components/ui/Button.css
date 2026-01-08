@@ -4,11 +4,13 @@
   justify-content: center;
   gap: 0.5rem;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-full);
+  /* M3 buttons are pill-shaped or rounded */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
+  letter-spacing: 0.02em;
 }
 
 .btn:disabled {
@@ -20,16 +22,19 @@
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
+  height: 32px;
 }
 
 .btn-md {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  height: 40px;
 }
 
 .btn-lg {
   padding: 1rem 2rem;
   font-size: 1.125rem;
+  height: 48px;
 }
 
 .btn-full {
@@ -38,45 +43,51 @@
 
 /* Variants */
 .btn-primary {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  box-shadow: var(--shadow-md);
+  /* Lighten slightly on hover or use ::after overlay */
+  filter: brightness(1.1);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  box-shadow: none;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: var(--md-sys-color-secondary);
+  color: var(--md-sys-color-on-secondary);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text-primary);
-  border: 2px solid var(--border-color);
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background: var(--bg-secondary);
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: transparent;
 }
 
 .btn-success {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: var(--gradient-success);
   color: white;
-  box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(235, 51, 73, 0.3);
+  background: var(--md-sys-color-error);
+  color: var(--md-sys-color-on-error);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Icon */

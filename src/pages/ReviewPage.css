@@ -1,0 +1,201 @@
+.review-page {
+    min-height: 100vh;
+    background: var(--md-sys-color-background);
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+}
+
+/* Header */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background: var(--surface-container);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-counts {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.review-counts .count {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.count.new {
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.count.learning {
+    background: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+}
+
+.count.review {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.session-xp {
+    font-weight: var(--font-weight-bold);
+    color: var(--md-sys-color-secondary);
+}
+
+/* Card Container */
+.review-card-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+.review-card {
+    background: var(--surface-container);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    width: 100%;
+    max-width: 350px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-character {
+    font-size: 5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    margin-bottom: var(--spacing-md);
+}
+
+.card-back {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    width: 100%;
+}
+
+.card-pinyin {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--md-sys-color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-meaning {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Actions */
+.review-actions {
+    padding: var(--spacing-md);
+    padding-bottom: calc(var(--spacing-lg) + env(safe-area-inset-bottom));
+}
+
+.rating-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.rating-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-sm);
+    background: var(--surface-container-high);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.rating-btn:hover {
+    border-color: var(--rating-color);
+    background: var(--surface-container-highest);
+}
+
+.rating-icon {
+    font-size: 1.5rem;
+}
+
+.rating-label {
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
+}
+
+/* Complete Screen */
+.review-complete {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.complete-icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.review-complete h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.complete-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item .stat-value {
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--md-sys-color-primary);
+}
+
+.stat-item .stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}

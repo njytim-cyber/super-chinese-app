@@ -2,3 +2,4 @@
 export * from './game.types';
 export * from './lesson.types';
 export * from './user.types';
+export * from './fsrs.types';
