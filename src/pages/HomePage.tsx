@@ -21,7 +21,7 @@ export function HomePage() {
         <div className="page home-page">
             {/* Header with stats */}
             <header className="home-header safe-area-top">
-                <XPDisplay size="sm" />
+                <div className="profile-icon-only" style={{ fontSize: '1.5rem' }}>🐼</div>
                 <StreakCounter size="sm" />
             </header>
 

@@ -27,7 +27,7 @@ export function StreakCounter({ size = 'md', showLabel = true }: StreakCounterPr
             </motion.div>
             <div className="streak-info">
                 <span className="streak-count">{streak.currentStreak}</span>
-                {showLabel && <span className="streak-label">day streak</span>}
+                {/* {showLabel && <span className="streak-label">day streak</span>} */}
             </div>
         </motion.div>
     );

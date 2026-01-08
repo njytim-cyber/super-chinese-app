@@ -13,7 +13,7 @@ export function SettingsPage() {
         <div className="page settings-page">
             <header className="page-header">
                 <button className="back-button" onClick={() => navigate('/')}>
-                    ← {t('common.back')}
+                    ←
                 </button>
                 <h1>{t('settings.title')}</h1>
             </header>

@@ -29,7 +29,7 @@ export interface UserProfile {
 
 export const DEFAULT_USER_PREFERENCES: UserPreferences = {
     language: 'en',
-    theme: 'dark',
+    theme: 'light',
     soundEnabled: true,
     hapticEnabled: true,
     notificationsEnabled: true,

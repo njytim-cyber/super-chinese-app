@@ -81,7 +81,7 @@ export function LevelDetermination({ onComplete }: LevelDeterminationProps) {
                         exit="exit"
                         className="level-determination-screen"
                     >
-                        <img src="/eggs.png" alt="12 eggs" style={{ width: '80%', maxWidth: '300px', marginBottom: '1rem', borderRadius: '1rem' }} />
+                        <img src="/muffins.png" alt="12 muffins" style={{ width: '80%', maxWidth: '300px', marginBottom: '1rem', borderRadius: '1rem' }} />
                         <h2 style={{ marginBottom: '1.5rem' }}>{t('onboarding.levelDetermination.question')}</h2>
 
                         <div className="options-grid" style={{ display: 'grid', gap: '1rem', width: '100%' }}>

@@ -35,15 +35,15 @@ const en = {
         complete: 'Complete!',
         continueToApp: "Let's Revise!",
         levelDetermination: {
-            question: 'How many eggs are there?',
+            question: 'How many muffins are there?',
             options: {
                 option1: "Let's write out the answer together.",
                 option2: "I can read basic Chinese, I'd like to choose from a list.",
                 option3: "I can write that in without help",
                 option4: "I've studied this before",
             },
-            mcqEnglish: 'How many eggs are there?',
-            mcqChinese: '这里有多少个鸡蛋?',
+            mcqEnglish: 'How many muffins are there?',
+            mcqChinese: '这里有多少个玛芬?',
         },
     },
 
