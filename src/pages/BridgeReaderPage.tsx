@@ -3,10 +3,11 @@
  * For intermediate learners (HSK 4-6) to practice reading comprehension
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { BRIDGE_PASSAGES, BridgePassage } from '../data/bridgeContent';
+import { motion } from 'framer-motion';
+import { BRIDGE_PASSAGES } from '../data/bridgeContent';
+import type { BridgePassage } from '../data/bridgeContent';
 import { speakChinese } from '../utils/audio';
 import { playSuccessSound } from '../utils/audio';
 import { fireConfetti } from '../utils/confetti';
@@ -246,12 +247,12 @@ export const BridgeReaderPage: React.FC = () => {
                             <motion.button
                                 key={idx}
                                 className={`answer-option ${hasAnswered
-                                        ? idx === currentQuestion.correctIndex
-                                            ? 'correct'
-                                            : idx === userAnswer
-                                                ? 'incorrect'
-                                                : ''
-                                        : ''
+                                    ? idx === currentQuestion.correctIndex
+                                        ? 'correct'
+                                        : idx === userAnswer
+                                            ? 'incorrect'
+                                            : ''
+                                    : ''
                                     }`}
                                 onClick={() => !hasAnswered && handleAnswerSelect(idx)}
                                 disabled={hasAnswered}

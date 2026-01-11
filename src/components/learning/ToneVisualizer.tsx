@@ -54,8 +54,7 @@ function extractTone(pinyin: string): number {
 
 export const ToneVisualizer: React.FC<ToneVisualizerProps> = ({
     targetPinyin,
-    onResult,
-    autoStart = false
+    onResult
 }) => {
     const [isRecording, setIsRecording] = useState(false);
     const [pitchData, setPitchData] = useState<number[]>([]);

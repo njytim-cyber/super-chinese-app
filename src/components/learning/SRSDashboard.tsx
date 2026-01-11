@@ -32,6 +32,8 @@ export const SRSDashboard: React.FC<SRSDashboardProps> = ({
 
     // Calculate statistics
     const stats = useMemo(() => {
+        // eslint-disable-next-line react-hooks/purity
+        const now = Date.now(); // Compute once at start to avoid impure function calls during render
         const cardValues = Object.values(cards);
         const totalCards = cardValues.length;
         const reviewedCards = cardValues.filter(c => c.state !== 'New').length;
@@ -46,9 +48,9 @@ export const SRSDashboard: React.FC<SRSDashboardProps> = ({
         const memoryHealth = Math.min(100, Math.round((avgStability / 30) * 100));
 
         // Calculate learning velocity (cards learned per day over last 7 days)
-        const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-        const recentLogs = logs.filter(l => new Date(l.reviewedAt).getTime() > sevenDaysAgo);
-        const uniqueCardsReviewed = new Set(recentLogs.map(l => l.cardId)).size;
+        const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+        const recentLogs = logs.filter(l => new Date(l.review).getTime() > sevenDaysAgo);
+        const uniqueCardsReviewed = new Set(recentLogs.map(l => l.card_id)).size;
         const cardsPerDay = uniqueCardsReviewed / 7;
 
         // Projected fluency date
@@ -56,7 +58,7 @@ export const SRSDashboard: React.FC<SRSDashboardProps> = ({
         const wordsRemaining = Math.max(0, targetWords - reviewedCards);
         const daysToFluency = cardsPerDay > 0 ? Math.ceil(wordsRemaining / cardsPerDay) : null;
         const fluencyDate = daysToFluency
-            ? new Date(Date.now() + daysToFluency * 24 * 60 * 60 * 1000)
+            ? new Date(now + daysToFluency * 24 * 60 * 60 * 1000)
             : null;
 
         return {
@@ -70,7 +72,7 @@ export const SRSDashboard: React.FC<SRSDashboardProps> = ({
             targetWords,
             progress: Math.round((reviewedCards / targetWords) * 100)
         };
-    }, [cards, logs, targetLevel, getCounts]);
+    }, [cards, logs, targetLevel]);
 
     // Format date nicely
     const formatDate = (date: Date | null): string => {

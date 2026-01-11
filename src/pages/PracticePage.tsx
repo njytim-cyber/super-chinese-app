@@ -3,7 +3,7 @@
  * Gateway to Listening, Reading, and Writing practice modes
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ListeningPractice, ReadingPractice, WritingPractice } from '../components/practice';
@@ -78,18 +78,31 @@ export const PracticePage: React.FC = () => {
     const navigate = useNavigate();
     const [mode, setMode] = useState<PracticeMode>('select');
     const [selectedLevel, setSelectedLevel] = useState(1);
-    const [words, setWords] = useState<HSKItem[]>([]);
+    const [toneWordIndex, setToneWordIndex] = useState(0);
 
-    useEffect(() => {
+    // Compute words based on selected level using useMemo instead of useEffect+setState
+    const words = useMemo(() => {
         const levelWords = getWordsForLevel(selectedLevel);
         // Filter to only words with pinyin and meaning
-        const enrichedWords = levelWords.filter(w => w.pinyin && w.meaning);
-        setWords(enrichedWords);
+        return levelWords.filter(w => w.pinyin && w.meaning);
     }, [selectedLevel]);
+
+    // Initialize tone word index when level changes
+    React.useLayoutEffect(() => {
+        if (words.length > 0) {
+            setToneWordIndex(Math.floor(Math.random() * words.length));
+        }
+    }, [selectedLevel, words.length]);
 
     const handleModeSelect = (modeId: string) => {
         setMode(modeId as PracticeMode);
     };
+
+    const handleNextToneWord = useCallback(() => {
+        if (words.length > 0) {
+            setToneWordIndex(Math.floor(Math.random() * words.length));
+        }
+    }, [words.length]);
 
     const handleComplete = (stats: { correct: number; incorrect: number; totalTime: number; xpEarned: number }) => {
         console.log('Practice complete:', stats);
@@ -128,8 +141,8 @@ export const PracticePage: React.FC = () => {
     }
 
     if (mode === 'tones') {
-        // Get a random word with pinyin for tone practice
-        const randomWord = words[Math.floor(Math.random() * words.length)];
+        // Get current word from state index
+        const currentWord = words[toneWordIndex];
         return (
             <div className="practice-page">
                 <div className="practice-page-header">
@@ -138,9 +151,9 @@ export const PracticePage: React.FC = () => {
                     <div className="header-spacer" />
                 </div>
                 <div style={{ padding: '1rem' }}>
-                    {randomWord?.pinyin && (
+                    {currentWord?.pinyin && (
                         <ToneVisualizer
-                            targetPinyin={randomWord.pinyin.split(' ')[0]}
+                            targetPinyin={currentWord.pinyin.split(' ')[0]}
                             onResult={(success, accuracy) => {
                                 console.log('Tone result:', success, accuracy);
                             }}
@@ -152,10 +165,10 @@ export const PracticePage: React.FC = () => {
                         marginTop: '1rem',
                         fontSize: '0.9rem'
                     }}>
-                        Word: {randomWord?.character}
+                        Word: {currentWord?.character}
                     </p>
                     <button
-                        onClick={() => setMode('tones')}
+                        onClick={handleNextToneWord}
                         style={{
                             display: 'block',
                             margin: '1rem auto 0',

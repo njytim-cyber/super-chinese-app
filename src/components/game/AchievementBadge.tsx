@@ -5,7 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Achievement, RARITY_COLORS } from '../../data/achievements';
+import type { Achievement } from '../../data/achievements';
+import { RARITY_COLORS } from '../../data/achievements';
 import './AchievementBadge.css';
 
 interface AchievementBadgeProps {

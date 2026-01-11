@@ -7,7 +7,8 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GRADED_STORIES, GradedStory, VocabItem } from '../data/gradedReaders';
+import { GRADED_STORIES } from '../data/gradedReaders';
+import type { GradedStory, VocabItem } from '../data/gradedReaders';
 import { speakChinese } from '../utils/audio';
 import './GradedReaderPage.css';
 
@@ -84,13 +85,10 @@ export const GradedReaderPage: React.FC = () => {
     const renderInteractiveText = (text: string) => {
         if (!selectedStory) return text;
 
-        const parts: React.ReactNode[] = [];
-        const lastIndex = 0;
         const words = [...selectedStory.vocabulary].sort((a, b) => b.word.length - a.word.length);
 
         // Simple approach: split by vocab words
         let remaining = text;
-        const keyCounter = 0;
 
         for (const vocabItem of words) {
             const regex = new RegExp(vocabItem.word, 'g');

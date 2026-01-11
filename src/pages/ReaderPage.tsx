@@ -62,11 +62,10 @@ interface WordInfo {
 interface WordPopupProps {
     word: WordInfo;
     position: { x: number; y: number };
-    onClose: () => void;
     onAddToDeck: () => void;
 }
 
-function WordPopup({ word, position, onClose, onAddToDeck }: WordPopupProps) {
+function WordPopup({ word, position, onAddToDeck }: WordPopupProps) {
     const { t } = useTranslation();
 
     const handleSpeak = () => {
@@ -182,7 +181,6 @@ export function ReaderPage() {
                     <WordPopup
                         word={selectedWord}
                         position={popupPosition}
-                        onClose={handleClosePopup}
                         onAddToDeck={handleAddToDeck}
                     />
                 )}
@@ -190,3 +188,5 @@ export function ReaderPage() {
         </div>
     );
 }
+
+export default ReaderPage;

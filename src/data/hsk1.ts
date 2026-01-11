@@ -1,4 +1,4 @@
-import { ChineseCharacter } from '../types/lesson.types';
+import type { ChineseCharacter } from '../types/lesson.types';
 
 /**
  * HSK 1 Complete Vocabulary (150 words)

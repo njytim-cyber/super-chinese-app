@@ -3,7 +3,7 @@
  * Unified access to HSK 1-6 vocabulary with lazy loading support
  */
 
-import { ChineseCharacter, HSKLevel } from '../types/lesson.types';
+import type { ChineseCharacter, HSKLevel } from '../types/lesson.types';
 
 // Lazy-load HSK data modules
 const HSK_MODULES: Record<HSKLevel, () => Promise<{ default?: ChineseCharacter[]; HSK1_VOCABULARY?: ChineseCharacter[]; HSK2_VOCABULARY?: ChineseCharacter[]; HSK3_VOCABULARY?: ChineseCharacter[] }>> = {

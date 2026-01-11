@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { XPDisplay, StreakCounter, Card, Button, SRSDashboard } from '../components';
+import { StreakCounter, Card, Button, SRSDashboard } from '../components';
 
 import { useGameStore, useUserStore } from '../stores';
 import './HomePage.css';
@@ -9,7 +9,7 @@ import './HomePage.css';
 export function HomePage() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { dailyGoalProgress, dailyGoalTarget, streak } = useGameStore();
+    const { dailyGoalProgress, dailyGoalTarget } = useGameStore();
     const { profile } = useUserStore();
 
     const menuItems = [
@@ -153,3 +153,5 @@ export function HomePage() {
         </div>
     );
 }
+
+export default HomePage;

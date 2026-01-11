@@ -1,4 +1,5 @@
-import { FSRSCard, FSRSLog, FSRSParameters, DEFAULT_FSRS_PARAMETERS, FSRSRating } from '../types/fsrs.types';
+import { DEFAULT_FSRS_PARAMETERS } from '../types/fsrs.types';
+import type { FSRSCard, FSRSLog, FSRSParameters, FSRSRating } from '../types/fsrs.types';
 
 /**
  * FSRS v4 Algorithm Implementation
@@ -101,12 +102,12 @@ export class FSRSAlgorithm {
         card.stability = this.params.w[r];
     }
 
-    private nextDS(card: FSRSCard, rating: FSRSRating, elapsedDays: number) {
-        const r = this.ratingToNumber(rating) - 1;
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    private nextDS(card: FSRSCard, rating: FSRSRating, _elapsedDays: number) {
         // Next Difficulty
-        const nextD = card.difficulty - this.params.w[6] * (r - 2);
-        const newD = card.difficulty + this.params.w[7] * (this.params.w[4] - nextD) * (1 - Math.pow(this.params.maximum_interval, -1)); // Simplified mean reversion
+        // Note: nextD and newD calculations preserved for reference but simplified version used below
+        // const nextD = card.difficulty - this.params.w[6] * (r - 2);
+        // const newD = card.difficulty + this.params.w[7] * (this.params.w[4] - nextD) * (1 - Math.pow(this.params.maximum_interval, -1));
         // Standard FSRS formulation: D' = D - w6 * (R - 3)
         // Note: FSRS implementation details vary slightly by version. Using v4 approx.
         let d = card.difficulty - this.params.w[6] * (this.ratingToNumber(rating) - 3);

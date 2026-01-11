@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { speakChinese, playSuccessSound } from '../../utils/audio';
 import { fireConfetti } from '../../utils/confetti';
-import { ComboDisplay, Mascot, MascotMood } from '../game';
+import { ComboDisplay, Mascot } from '../game';
+import type { MascotMood } from '../game';
 import './ListeningPractice.css';
 
 // HSK Item type from enriched data
@@ -55,6 +56,7 @@ export const ListeningPractice: React.FC<ListeningPracticeProps> = ({
         totalTime: 0,
         xpEarned: 0
     });
+    // eslint-disable-next-line react-hooks/purity
     const [startTime] = useState(Date.now());
     const [showResult, setShowResult] = useState(false);
     const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);

@@ -1,0 +1,54 @@
+/**
+ * Stroke Animator Component Styles
+ */
+
+.stroke-animator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stroke-canvas {
+    background: var(--surface-container);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stroke-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stroke-count {
+    font-size: 0.9rem;
+    color: var(--on-surface-variant);
+    font-weight: 500;
+}
+
+.stroke-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.stroke-btn {
+    padding: 0.5rem 1rem;
+    background: var(--surface-container-high);
+    border: none;
+    border-radius: 8px;
+    color: var(--on-surface);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stroke-btn:hover:not(:disabled) {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+}
+
+.stroke-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

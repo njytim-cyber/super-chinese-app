@@ -1,16 +1,32 @@
 /**
  * Sync Store
  * Manages cloud synchronization of learning data via Supabase
+ * Now with real-time subscriptions for cross-device sync
  */
 
 import { create } from 'zustand';
 import {
     supabase,
     isSyncEnabled,
-    getCurrentUser,
-    UserProfile,
-    SyncedCard
+    getCurrentUser
 } from '../lib/supabase';
+import type { UserProfile, SyncedCard } from '../lib/supabase';
+import type { RealtimeChannel } from '@supabase/supabase-js';
+
+/**
+ * Local card data structure for syncing
+ */
+interface LocalCardData {
+    due: Date | string;
+    stability: number;
+    difficulty: number;
+    elapsed_days: number;
+    scheduled_days: number;
+    reps: number;
+    lapses: number;
+    state: 'New' | 'Learning' | 'Review' | 'Relearning';
+    last_review: Date | string | null;
+}
 
 interface SyncState {
     // State
@@ -20,14 +36,19 @@ interface SyncState {
     userId: string | null;
     userProfile: UserProfile | null;
     syncError: string | null;
+    realtimeChannel: RealtimeChannel | null;
+    pendingCards: SyncedCard[];
 
     // Actions
     checkConnection: () => void;
     fetchUserProfile: () => Promise<void>;
     updateUserProfile: (updates: Partial<UserProfile>) => Promise<void>;
-    syncCards: (cards: Record<string, any>) => Promise<void>;
+    syncCards: (cards: Record<string, LocalCardData>) => Promise<void>;
     fetchCards: () => Promise<SyncedCard[]>;
     setZenMode: (enabled: boolean) => Promise<void>;
+    subscribeToCards: () => void;
+    unsubscribeFromCards: () => void;
+    handleCardChange: (payload: { new?: SyncedCard; old?: SyncedCard; eventType: string }) => void;
 }
 
 export const useSyncStore = create<SyncState>((set, get) => ({
@@ -37,6 +58,8 @@ export const useSyncStore = create<SyncState>((set, get) => ({
     userId: null,
     userProfile: null,
     syncError: null,
+    realtimeChannel: null,
+    pendingCards: [],
 
     checkConnection: () => {
         set({ isOnline: navigator.onLine && isSyncEnabled() });
@@ -65,8 +88,12 @@ export const useSyncStore = create<SyncState>((set, get) => ({
                 userProfile: data as UserProfile,
                 syncError: null
             });
-        } catch (error: any) {
-            set({ syncError: error.message });
+
+            // Auto-subscribe to cards after fetching profile
+            get().subscribeToCards();
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            set({ syncError: message });
         }
     },
 
@@ -93,8 +120,9 @@ export const useSyncStore = create<SyncState>((set, get) => ({
                 lastSyncAt: new Date(),
                 syncError: null
             }));
-        } catch (error: any) {
-            set({ isSyncing: false, syncError: error.message });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            set({ isSyncing: false, syncError: message });
         }
     },
 
@@ -107,7 +135,7 @@ export const useSyncStore = create<SyncState>((set, get) => ({
             set({ isSyncing: true });
 
             // Convert local cards to sync format
-            const syncedCards = Object.entries(cards).map(([cardId, card]: [string, any]) => ({
+            const syncedCards = Object.entries(cards).map(([cardId, card]) => ({
                 user_id: userId,
                 card_id: cardId,
                 due: card.due,
@@ -137,8 +165,9 @@ export const useSyncStore = create<SyncState>((set, get) => ({
                 lastSyncAt: new Date(),
                 syncError: null
             });
-        } catch (error: any) {
-            set({ isSyncing: false, syncError: error.message });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            set({ isSyncing: false, syncError: message });
         }
     },
 
@@ -156,21 +185,94 @@ export const useSyncStore = create<SyncState>((set, get) => ({
             if (error) throw error;
 
             return data as SyncedCard[];
-        } catch (error: any) {
-            set({ syncError: error.message });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            set({ syncError: message });
             return [];
         }
     },
 
     setZenMode: async (enabled) => {
         await get().updateUserProfile({ zen_mode: enabled });
+    },
+
+    /**
+     * Subscribe to real-time card changes for the current user
+     */
+    subscribeToCards: () => {
+        if (!supabase) return;
+        const { userId, realtimeChannel } = get();
+        if (!userId) return;
+
+        // Don't create duplicate subscriptions
+        if (realtimeChannel) return;
+
+        const channel = supabase
+            .channel(`cards:${userId}`)
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'cards',
+                    filter: `user_id=eq.${userId}`
+                },
+                (payload) => {
+                    get().handleCardChange({
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        new: payload.new as any,
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        old: payload.old as any,
+                        eventType: payload.eventType
+                    });
+                }
+            )
+            .subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    console.log('🔄 Real-time SRS sync connected');
+                }
+            });
+
+        set({ realtimeChannel: channel });
+    },
+
+    /**
+     * Unsubscribe from real-time card changes
+     */
+    unsubscribeFromCards: () => {
+        const { realtimeChannel } = get();
+        if (realtimeChannel && supabase) {
+            supabase.removeChannel(realtimeChannel);
+            set({ realtimeChannel: null });
+            console.log('📴 Real-time SRS sync disconnected');
+        }
+    },
+
+    /**
+     * Handle incoming card changes from other devices
+     */
+    handleCardChange: (payload) => {
+        const { eventType } = payload;
+        const card = payload.new;
+
+        if (!card) return;
+
+        // Add to pending cards for local state update
+        set(state => ({
+            pendingCards: [...state.pendingCards, card],
+            lastSyncAt: new Date()
+        }));
+
+        console.log(`🔄 Card ${eventType}:`, card.card_id);
     }
 }));
 
 // Listen for online/offline events
 if (typeof window !== 'undefined') {
     window.addEventListener('online', () => {
-        useSyncStore.getState().checkConnection();
+        const store = useSyncStore.getState();
+        store.checkConnection();
+        store.subscribeToCards();
     });
     window.addEventListener('offline', () => {
         useSyncStore.getState().checkConnection();
@@ -178,3 +280,4 @@ if (typeof window !== 'undefined') {
 }
 
 export default useSyncStore;
+

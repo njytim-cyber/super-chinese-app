@@ -1,0 +1,62 @@
+/**
+ * Daily Tip Component Styles
+ */
+
+.daily-tip {
+    background: var(--surface-container);
+    border-radius: 16px;
+    padding: 1rem;
+    cursor: pointer;
+    border-left: 4px solid var(--category-color, var(--primary));
+    transition: all 0.2s;
+}
+
+.daily-tip:hover {
+    background: var(--surface-container-high);
+}
+
+.daily-tip-compact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--surface-container);
+    border-radius: 8px;
+}
+
+.tip-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.tip-emoji {
+    font-size: 1.5rem;
+}
+
+.tip-label {
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tip-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--on-surface);
+    margin-bottom: 0.75rem;
+}
+
+.tip-flip-hint {
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+    opacity: 0.7;
+}
+
+.tip-text {
+    font-size: 0.85rem;
+    color: var(--on-surface);
+    line-height: 1.4;
+}

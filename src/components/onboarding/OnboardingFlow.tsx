@@ -31,7 +31,7 @@ type Phase = 'demo' | 'practice' | 'celebrating' | 'complete' | 'level_determina
 export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     const { t } = useTranslation();
     const { addXP, updateStreak, addCharacterLearned, completeOnboarding } = useGameStore();
-    const { profile } = useUserStore();
+    useUserStore(); // Store subscription maintained for reactivity
 
     // Guard against multiple completions
     const processingRef = useRef(false);
@@ -54,7 +54,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     const [showStreak, setShowStreak] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
     const [showSettings, setShowSettings] = useState(false); // Settings modal state
-    const [showSettingsButton, setShowSettingsButton] = useState(true); // Settings button visibility (always visible at start)
+    const showSettingsButton = true; // Settings button always visible
 
     const currentCharacter = useMemo(
         () => ONBOARDING_CHARACTERS[currentIndex],
@@ -62,13 +62,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     );
     const isLastCharacter = currentIndex === ONBOARDING_CHARACTERS.length - 1;
 
-    // Safety check
-    if (!currentCharacter && phase !== 'complete' && phase !== 'level_determination') {
-        console.error('Invalid character index:', currentIndex);
-        return <div className="p-4 text-red-500">Error: Character not found</div>;
-    }
-
-    // Handle demo animation complete
+    // Handle demo animation complete - defined before conditional return
     const handleDemoComplete = useCallback(() => {
         setShowHandGuide(false);
         setPhase('practice');
@@ -89,7 +83,10 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         fireConfetti(currentIndex);
 
         // Speak character for reinforcement
-        speakChinese(currentCharacter.character);
+        if (currentCharacter) {
+            speakChinese(currentCharacter.character);
+            addCharacterLearned(currentCharacter.character);
+        }
 
         // Award XP
         const reward = XP_REWARDS[currentIndex] ?? 10;
@@ -99,9 +96,6 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         if (currentIndex === 0) {
             updateStreak();
         }
-
-        // Record learned character
-        addCharacterLearned(currentCharacter.character);
 
         // Show celebration overlay
         setCelebrationMessage(t(ENCOURAGEMENT_KEYS[currentIndex] ?? ENCOURAGEMENT_KEYS[0]));
@@ -148,17 +142,11 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         onComplete();
     }, [completeOnboarding, onComplete]);
 
-    // Level determination removed as per user request
-    /*
-    const handleLevelDeterminationComplete = useCallback(() => {
-        completeOnboarding();
-        onComplete();
-    }, [completeOnboarding, onComplete]);
-    */
-
     // Trigger speech and hand guide when demo starts
     const handleDemoStart = useCallback(() => {
-        speakChinese(currentCharacter.character);
+        if (currentCharacter) {
+            speakChinese(currentCharacter.character);
+        }
         setShowHandGuide(true);
     }, [currentCharacter]);
 
@@ -166,6 +154,12 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     const handlePracticeStart = useCallback(() => {
         setShowHandGuide(true);
     }, []);
+
+    // Safety check - after all hooks
+    if (!currentCharacter && phase !== 'complete' && phase !== 'level_determination') {
+        console.error('Invalid character index:', currentIndex);
+        return <div className="p-4 text-red-500">Error: Character not found</div>;
+    }
 
     return (
         <div className="onboarding-container">

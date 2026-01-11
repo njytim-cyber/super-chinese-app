@@ -1,0 +1,116 @@
+/**
+ * Sync Indicator Styles
+ */
+
+.sync-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--md-sys-color-surface-container, rgba(255, 255, 255, 0.05));
+    border-radius: 20px;
+    font-size: 0.8rem;
+    position: relative;
+}
+
+.sync-indicator-compact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--md-sys-color-surface-container, rgba(255, 255, 255, 0.05));
+    position: relative;
+    cursor: pointer;
+}
+
+.sync-icon {
+    font-size: 1rem;
+}
+
+.sync-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.sync-status {
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface, #fff);
+}
+
+.sync-time {
+    font-size: 0.7rem;
+    color: var(--md-sys-color-on-surface-variant, rgba(255, 255, 255, 0.6));
+}
+
+.sync-error-text {
+    font-size: 0.7rem;
+    color: var(--md-sys-color-error, #ff6b6b);
+    cursor: pointer;
+}
+
+.sync-spinner {
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-top-color: var(--md-sys-color-primary, #667eea);
+    border-radius: 50%;
+}
+
+.sync-pulse {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    width: 8px;
+    height: 8px;
+    background: var(--md-sys-color-tertiary, #48bb78);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+}
+
+/* Status variants */
+.sync-indicator.connected .sync-icon,
+.sync-indicator-compact.connected .sync-icon {
+    color: var(--md-sys-color-tertiary, #48bb78);
+}
+
+.sync-indicator.syncing .sync-icon,
+.sync-indicator-compact.syncing .sync-icon {
+    animation: spin 1s linear infinite;
+}
+
+.sync-indicator.error .sync-icon,
+.sync-indicator-compact.error .sync-icon {
+    color: var(--md-sys-color-error, #ff6b6b);
+}
+
+.sync-indicator.offline .sync-icon,
+.sync-indicator-compact.offline .sync-icon {
+    color: var(--md-sys-color-on-surface-variant, rgba(255, 255, 255, 0.4));
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

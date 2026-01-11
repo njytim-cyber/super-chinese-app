@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { XPDisplay, StreakCounter, Badge, Card } from '../components';
+import { StreakCounter, Badge, Card } from '../components';
 import { useGameStore, useUserStore } from '../stores';
 import { ACHIEVEMENTS } from '../types';
 import './ProfilePage.css';
@@ -10,7 +10,7 @@ import './ProfilePage.css';
 export function ProfilePage() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { achievements, charactersLearned, lessonsCompleted, totalXP, currentLevel, streak } = useGameStore();
+    const { achievements, charactersLearned, lessonsCompleted, totalXP, currentLevel } = useGameStore();
     const { profile, setDisplayName, setAvatar } = useUserStore();
     const [isEditingName, setIsEditingName] = useState(false);
     const [tempName, setTempName] = useState(profile.displayName);
@@ -149,3 +149,5 @@ export function ProfilePage() {
         </div>
     );
 }
+
+export default ProfilePage;

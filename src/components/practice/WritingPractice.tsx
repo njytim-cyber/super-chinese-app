@@ -3,6 +3,7 @@
  * Sentence rearrangement and pinyin-to-character exercises
  */
 
+/* eslint-disable react-hooks/purity */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
@@ -56,7 +57,6 @@ const SENTENCE_TEMPLATES = [
 ];
 
 export const WritingPractice: React.FC<WritingPracticeProps> = ({
-    words,
     level,
     onComplete
 }) => {
@@ -239,10 +239,10 @@ export const WritingPractice: React.FC<WritingPracticeProps> = ({
                             key={piece.id}
                             value={piece}
                             className={`word-piece ${isSubmitted
-                                    ? pieces.map(p => p.text).indexOf(piece.text) === correctOrder.indexOf(piece.text)
-                                        ? 'correct'
-                                        : 'incorrect'
-                                    : ''
+                                ? pieces.map(p => p.text).indexOf(piece.text) === correctOrder.indexOf(piece.text)
+                                    ? 'correct'
+                                    : 'incorrect'
+                                : ''
                                 }`}
                             whileDrag={{ scale: 1.1, zIndex: 10 }}
                             style={{ cursor: isSubmitted ? 'default' : 'grab' }}

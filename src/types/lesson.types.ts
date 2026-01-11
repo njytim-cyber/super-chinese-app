@@ -19,7 +19,16 @@ export interface ChineseCharacter {
     difficulty: CharacterDifficulty;
     radicals?: string[];
     examples?: CharacterExample[];
-    audio?: string;          // Audio file path
+    audio?: string;          // Audio file path or URL
+    strokeOrder?: string[];  // SVG paths or HanziWriter stroke data
+    exampleSentences?: ExampleSentence[];  // Contextual usage examples
+}
+
+export interface ExampleSentence {
+    chinese: string;
+    pinyin: string;
+    english: string;
+    audioUrl?: string;
 }
 
 export interface CharacterExample {

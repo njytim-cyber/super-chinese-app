@@ -6,3 +6,5 @@ export { LevelUpCelebration } from './LevelUpCelebration';
 export { ComboDisplay } from './ComboDisplay';
 export { Mascot } from './Mascot';
 export type { MascotMood } from './Mascot';
+export { StreakCelebration } from './StreakCelebration';
+

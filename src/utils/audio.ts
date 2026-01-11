@@ -42,29 +42,41 @@ export const playSuccessSound = (index: number): void => {
 /**
  * Speak a Chinese character using Web Speech API
  */
-export const speakChinese = (text: string): void => {
-    if (!('speechSynthesis' in window)) return;
-
-    try {
-        window.speechSynthesis.cancel();
-
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-CN';
-        utterance.rate = 0.8;
-        utterance.pitch = 1;
-        utterance.volume = 1;
-
-        // Try to find a Chinese voice
-        const voices = window.speechSynthesis.getVoices();
-        const chineseVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'));
-        if (chineseVoice) {
-            utterance.voice = chineseVoice;
+export const speakChinese = (text: string, rate: number = 0.8): Promise<void> => {
+    return new Promise((resolve) => {
+        if (!('speechSynthesis' in window)) {
+            resolve();
+            return;
         }
 
-        window.speechSynthesis.speak(utterance);
-    } catch (e) {
-        console.warn('Speech synthesis failed:', e);
-    }
+        try {
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = rate;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+
+            // Try to find a Chinese voice
+            const voices = window.speechSynthesis.getVoices();
+            const chineseVoice = voices.find(v => v.lang.includes('zh') || v.lang.includes('CN'));
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
+
+            utterance.onend = () => resolve();
+            utterance.onerror = (e) => {
+                console.warn('Speech synthesis error:', e);
+                resolve(); // Resolve anyway to not block flow
+            };
+
+            window.speechSynthesis.speak(utterance);
+        } catch (e) {
+            console.warn('Speech synthesis failed:', e);
+            resolve();
+        }
+    });
 };
 
 // Pre-load voices when available

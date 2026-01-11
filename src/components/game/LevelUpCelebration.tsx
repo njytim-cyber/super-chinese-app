@@ -3,7 +3,8 @@
  * Full-screen celebration when user levels up
  */
 
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/purity */
+import React, { useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fireConfetti } from '../../utils/confetti';
 import './LevelUpCelebration.css';
@@ -32,22 +33,26 @@ export const LevelUpCelebration: React.FC<LevelUpCelebrationProps> = ({
     xpEarned = 0,
     onComplete
 }) => {
-    const [phase, setPhase] = useState<'enter' | 'show' | 'exit'>('enter');
     const levelTitle = LEVEL_TITLES[newLevel] || LEVEL_TITLES[10];
+
+    // Pre-compute stable particle positions to avoid impure function calls during render
+    const particleData = useMemo(() =>
+        [...Array(20)].map(() => ({
+            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 400),
+            duration: 3 + Math.random() * 2,
+            delay: Math.random() * 2
+        })), []);
 
     useEffect(() => {
         // Fire confetti on mount
         fireConfetti();
 
-        // Phase transitions
-        const enterTimer = setTimeout(() => setPhase('show'), 500);
+        // Auto-complete after celebration duration
         const exitTimer = setTimeout(() => {
-            setPhase('exit');
-            setTimeout(onComplete, 500);
-        }, 3500);
+            onComplete();
+        }, 4000);
 
         return () => {
-            clearTimeout(enterTimer);
             clearTimeout(exitTimer);
         };
     }, [onComplete]);
@@ -62,12 +67,12 @@ export const LevelUpCelebration: React.FC<LevelUpCelebrationProps> = ({
             >
                 {/* Background particles */}
                 <div className="particles">
-                    {[...Array(20)].map((_, i) => (
+                    {particleData.map((particle, i) => (
                         <motion.div
                             key={i}
                             className="particle"
                             initial={{
-                                x: Math.random() * window.innerWidth,
+                                x: particle.x,
                                 y: window.innerHeight + 20,
                                 opacity: 0
                             }}
@@ -76,8 +81,8 @@ export const LevelUpCelebration: React.FC<LevelUpCelebrationProps> = ({
                                 opacity: [0, 1, 1, 0]
                             }}
                             transition={{
-                                duration: 3 + Math.random() * 2,
-                                delay: Math.random() * 2,
+                                duration: particle.duration,
+                                delay: particle.delay,
                                 repeat: Infinity
                             }}
                         />

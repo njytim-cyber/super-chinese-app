@@ -7,7 +7,7 @@ interface StreakCounterProps {
     showLabel?: boolean;
 }
 
-export function StreakCounter({ size = 'md', showLabel = true }: StreakCounterProps) {
+export function StreakCounter({ size = 'md' }: StreakCounterProps) {
     const { streak } = useGameStore();
     const isActive = streak.currentStreak > 0;
 

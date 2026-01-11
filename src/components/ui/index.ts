@@ -5,3 +5,4 @@ export { Card } from './Card';
 export { AnimatedHand } from './AnimatedHand';
 export { CelebrationOverlay } from './CelebrationOverlay';
 export { ErrorBoundary } from './ErrorBoundary';
+export { SyncIndicator } from './SyncIndicator';

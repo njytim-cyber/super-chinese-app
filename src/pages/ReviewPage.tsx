@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useFSRSStore, useGameStore } from '../stores';
-import { FSRSRating } from '../types/fsrs.types';
+import type { FSRSRating } from '../types/fsrs.types';
 import { speakChinese, playSuccessSound, fireConfetti } from '../utils';
 import { Button } from '../components/ui';
 import './ReviewPage.css';
@@ -184,3 +184,5 @@ export function ReviewPage() {
         </div>
     );
 }
+
+export default ReviewPage;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { FSRSCard, FSRSLog, FSRSRating } from '../types/fsrs.types';
+import type { FSRSCard, FSRSLog, FSRSRating } from '../types/fsrs.types';
 import { fsrs } from '../utils/fsrsAlgorithm';
 
 interface FSRSStore {
@@ -64,7 +64,7 @@ export const useFSRSStore = create<FSRSStore>()(
             },
 
             getDueCards: () => {
-                const { cards, deckSettings } = get();
+                const { cards } = get();
                 const now = new Date();
 
                 // Filter due cards

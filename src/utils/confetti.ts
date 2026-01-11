@@ -21,7 +21,7 @@ const CONFETTI_CONFIGS = [
 /**
  * Fire confetti celebration with intensity based on index
  */
-export const fireConfetti = (index: number): void => {
+export const fireConfetti = (index: number = 0): void => {
     const config = CONFETTI_CONFIGS[Math.min(index, CONFETTI_CONFIGS.length - 1)];
     confetti(config);
 };

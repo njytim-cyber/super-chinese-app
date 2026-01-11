@@ -5,6 +5,28 @@
 
 import { test, expect } from '@playwright/test';
 
+// Setup: bypass onboarding for all tests by pre-setting localStorage
+test.beforeEach(async ({ page }) => {
+    // Set localStorage to skip onboarding (zustand persist format)
+    await page.addInitScript(() => {
+        const gameState = {
+            state: {
+                hasCompletedOnboarding: true,
+                totalXP: 100,
+                currentLevel: 1,
+                streak: { currentStreak: 1, longestStreak: 1, lastPracticeDate: null, streakFreezeUsedToday: false },
+                achievements: [],
+                charactersLearned: [],
+                lessonsCompleted: [],
+                dailyGoalProgress: 0,
+                dailyGoalTarget: 20
+            },
+            version: 0
+        };
+        localStorage.setItem('super-chinese-game-storage', JSON.stringify(gameState));
+    });
+});
+
 test.describe('Navigation & Core Pages', () => {
     test('loads home page', async ({ page }) => {
         await page.goto('/');
@@ -96,12 +118,12 @@ test.describe('Graded Reader', () => {
 test.describe('Practice Page', () => {
     test('displays practice mode selector', async ({ page }) => {
         await page.goto('/practice');
-        await expect(page.locator('.mode-selector')).toBeVisible();
+        await expect(page.locator('.mode-grid')).toBeVisible();
     });
 
     test('displays level picker', async ({ page }) => {
         await page.goto('/practice');
-        await expect(page.locator('.level-picker')).toBeVisible();
+        await expect(page.locator('.level-selector')).toBeVisible();
     });
 });
 
@@ -118,12 +140,18 @@ test.describe('Gamification Features', () => {
 test.describe('Accessibility', () => {
     test('pages have proper heading structure', async ({ page }) => {
         await page.goto('/');
+        await page.waitForLoadState('networkidle');
+        // Wait for initial render to complete
+        await page.waitForTimeout(500);
         const h1Count = await page.locator('h1').count();
         expect(h1Count).toBeGreaterThanOrEqual(1);
     });
 
     test('buttons are clickable', async ({ page }) => {
         await page.goto('/');
+        await page.waitForLoadState('networkidle');
+        // Wait for initial render to complete
+        await page.waitForTimeout(500);
         const buttons = page.locator('button');
         const count = await buttons.count();
         expect(count).toBeGreaterThan(0);

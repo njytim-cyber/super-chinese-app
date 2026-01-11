@@ -63,3 +63,5 @@ export function LearnPage() {
         </div>
     );
 }
+
+export default LearnPage;
